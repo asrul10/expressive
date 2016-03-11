@@ -1,10 +1,11 @@
-<md-card>
+<md-card class="card-small" style="margin-top: {{top}}px">
 	<md-card-title>
 		<md-card-title-text>
-			<span class="md-headline">Login</span>
+			<span class="md-headline"><i class="fa fa-sign-in"></i> Login</span>
+			<p ng-if="message">{{message}}</p>
 		</md-card-title-text>
 	</md-card-title>
-	<form ng-submit="doLogin()">
+	<form ng-submit="doLogin()" class="signin-padding">
 		<md-input-container class="md-block">
 			<label>Email</label>
 			<input ng-model="user.email" type="email">
@@ -14,8 +15,7 @@
 			<input ng-model="user.password" type="password">
 		</md-input-container>
 		<md-card-actions layout="row" layout-align="end center">
-			<md-button type="submit">Login</md-button>
-			<md-button>Register</md-button>
+			<md-button type="submit" class="md-raised md-primary">Login</md-button>
 		</md-card-actions>
 	</form>
 </md-card>

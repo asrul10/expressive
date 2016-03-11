@@ -15,7 +15,9 @@
     "angular": "~1.5.0",
     "angular-aria": "^1.5.0",
     "angular-messages": "^1.5.0",
-    "angular-animate": "^1.5.0"
+    "angular-animate": "^1.5.0",
+    "font-awesome": "fontawesome#^4.5.0",
+    "angular-cookies": "^1.5.0"
   },
   "overrides": {
     "angular": {
@@ -38,6 +40,15 @@
     },
     "angular-animate": {
       "main": "./angular-animate.min.js"
+    },
+    "angular-cookies": {
+      "main": "./angular-cookies.min.js"
+    },
+    "font-awesome": {
+      "main": [
+        "./css/font-awesome.min.css",
+        "./fonts/*.*"
+      ]
     }
   }
 }

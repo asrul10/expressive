@@ -4,27 +4,40 @@
 	<title>Express</title>
 	<base href="/">
 	<link rel="stylesheet" type="text/css" href="dist/angular-material/angular-material.min.css">
+	<link rel="stylesheet" type="text/css" href="dist/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="style/main.css">
 </head>
 <body>
 	<nav layout="row" flex ng-controller="NavCtrl">
 	    <md-toolbar>
 	        <div class="md-toolbar-tools">
-	            <md-button ng-click="toggleLeft()">
-	                Menu
+	            <md-button class="md-icon-button" aria-label="menu" ng-click="toggleLeft()">
+	                <i class="fa fa-bars"></i>
 	            </md-button>
 	            <h2>
-		        	<span>Express</span>
+		        	<span><a href="home">Expressive</a></span>
 		        </h2>
 	        </div>
 	    </md-toolbar>
 	    <md-sidenav class="md-sidenav-left" md-component-id="left">
 	        <md-toolbar>
-	            <h1 class="md-toolbar-tools">Sidenav Left</h1>
+	            <h1 class="md-toolbar-tools">MENU</h1>
 	        </md-toolbar>
-	        <md-content layout-padding>
-	            <a href="login" ng-click="close()" title="Login">Login</a>
-	            <a href="home" ng-click="close()" title="Home">Home</a>
-	            <a href="about" ng-click="close()" title="About">About</a>
+	        <md-content>
+				<md-list>
+				    <md-list-item ng-if="!loggedin">
+				    	<md-button class="menu-list" href="login" ng-click="close()"> Login </md-button>
+				    </md-list-item>
+				    <md-list-item>
+				    	<md-button class="menu-list" href="home" ng-click="close()"> Home </md-button>
+				    </md-list-item>
+				    <md-list-item>
+				    	<md-button class="menu-list" href="user" ng-click="close()"> User </md-button>
+				    </md-list-item>
+				    <md-list-item ng-if="loggedin">
+				    	<md-button class="menu-list" ng-click="logout()"> Logout </md-button>
+				    </md-list-item>
+				</md-list>
 	        </md-content>
 	    </md-sidenav>
 	</nav>
@@ -39,6 +52,8 @@
 	<script src="dist/angular-aria/angular-aria.min.js"></script>
 	<script src="dist/angular-animate/angular-animate.min.js"></script>
 	<script src="dist/angular-material/angular-material.min.js"></script>
+	<script src="dist/angular-cookies/angular-cookies.min.js"></script>
+	<script src="src/service.js"></script>
 	<script src="src/app.js"></script>
 </body>
 </html>

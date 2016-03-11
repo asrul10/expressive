@@ -3,3 +3,8 @@
 .DS_STORE
 /.idea/
 default-theme.css
+
+# Bower and Node
+#-------------------------
+bower_components/*
+node_modules/*

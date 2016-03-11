@@ -16,7 +16,17 @@ app.use(morgan('dev'));
 // Model
 var User = models.user;
 
-// API
+// Route Client
+app.use(express.static(__dirname + '/public'));
+app.get('*', function(req, res, next) {
+	if (req.url.indexOf('/api/')) {
+		res.sendfile('public/index.html');
+	} else {
+		next();
+	}
+});
+
+// REST
 app.post('/api/auth', function(req, res) {
 	User.findOne({
 		where: {email: req.body.email} 
@@ -32,7 +42,7 @@ app.post('/api/auth', function(req, res) {
 					email: user.email
 				};
 				var token = jwt.sign(tok, app.get('superSecret'), {
-					expiresInMinutes: 1440
+					expiresIn: '7d'
 				});
 
 				res.json({
@@ -46,9 +56,7 @@ app.post('/api/auth', function(req, res) {
 });
 
 app.use(function(req, res, next) {
-	
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function (err, decoded) {
 			if (err) {
@@ -66,17 +74,32 @@ app.use(function(req, res, next) {
 	}
 });
 
-app.get('/api/user', function(req, res) {
-	User.findAll().then(function(user) {
-		res.json(user);
-	});
+app.get('/api/authenticated', function(req, res) {
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	var decoded = jwt.decode(token);
+
+	res.json({ success: true, message: 'Loged in', user: decoded});
 });
 
-// Route Client
-app.use(express.static(__dirname + '/public'));
-function sendIndex(req, res) {
-  res.sendfile('public/index.html');
-}
-app.get('*', sendIndex);
+app
+	.get('/api/user', function(req, res) {
+		User.findAll().then(function(user) {
+			if (user) {
+				res.json(user);
+			} else {
+				res.json({success: false, message: 'User no data'});
+			}
+		});
+	})
+
+	.get('/api/user/:id', function(req, res) {
+		User.findById(req.params.id).then(function(user) {
+			if (user) {
+				res.json(user);
+			} else {
+				res.json({success: false, message: 'User not found'});
+			}
+		});
+	});
 
 app.listen(port);
