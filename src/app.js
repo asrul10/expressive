@@ -1,26 +1,33 @@
-var app = angular.module('App', ["ngRoute", "ngMaterial", "Service", "ngCookies"]);
+var app = angular.module('App', ["ngRoute", "ngMaterial", "Service", "ngCookies", "md.data.table"]);
 
 // Route
-app.config(function($routeProvider, $locationProvider) {
-    $routeProvider
-    	.when('/login', {
-    		templateUrl: "/template/login.html",
-    		controller: "LoginCtrl"
-    	})
-        .when('/home', {
-            template: '<h1>Home Page</h1>',
-            controller: 'HomeCtrl'
-        })
-        .when('/user', {
-            templateUrl: '/template/user.html',
-            controller: 'UserCtrl'
-        })
-        .otherwise({
-            redirectTo : '/home'
-        });
+app
+    .config(function($routeProvider, $locationProvider) {
+        $routeProvider
+        	.when('/login', {
+        		templateUrl: "/template/login.html",
+        		controller: "LoginCtrl"
+        	})
+            .when('/home', {
+                template: '<h1>Home Page</h1>',
+                controller: 'HomeCtrl'
+            })
+            .when('/user', {
+                templateUrl: '/template/user.html',
+                controller: 'UserCtrl'
+            })
+            .otherwise({
+                redirectTo : '/home'
+            });
 
-    $locationProvider.html5Mode(true);
-});
+        $locationProvider.html5Mode(true);
+    })
+
+    .config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('default')
+            .primaryPalette('blue')
+            .accentPalette('light-blue');
+    });
 
 // Controller
 app
@@ -67,8 +74,14 @@ app
     })
 
     .controller('UserCtrl', function($scope, $location, user) {
+        $scope.promise = false;
         user.getUsers().then(function(res) {
+            $scope.promise = true;
             $scope.users = res.data;
+
+            $scope.onReorder = function (order) {
+                console.log(order);
+            };
         }, function(err) {
             $location.path('/login');
         });
