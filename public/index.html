@@ -25,20 +25,7 @@
 	            <h1 class="md-toolbar-tools">MENU</h1>
 	        </md-toolbar>
 	        <md-content>
-				<md-list>
-				    <md-list-item ng-if="!loggedin">
-				    	<md-button class="menu-list" href="login" ng-click="close()"> Login </md-button>
-				    </md-list-item>
-				    <md-list-item>
-				    	<md-button class="menu-list" href="home" ng-click="close()"> Home </md-button>
-				    </md-list-item>
-				    <md-list-item>
-				    	<md-button class="menu-list" href="user" ng-click="close()"> User </md-button>
-				    </md-list-item>
-				    <md-list-item ng-if="loggedin">
-				    	<md-button class="menu-list" ng-click="logout()"> Logout </md-button>
-				    </md-list-item>
-				</md-list>
+				<nav-menu></nav-menu>
 	        </md-content>
 	    </md-sidenav>
 	</nav>
@@ -55,7 +42,6 @@
 	<script src="dist/angular-material/angular-material.min.js"></script>
 	<script src="dist/angular-cookies/angular-cookies.min.js"></script>
 	<script src="dist/angular-material-data-table/dist/md-data-table.min.js"></script>
-	<script src="src/service.js"></script>
 	<script src="src/app.js"></script>
 </body>
 </html>

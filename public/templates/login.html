@@ -15,7 +15,8 @@
 			<input ng-model="user.password" type="password">
 		</md-input-container>
 		<md-card-actions layout="row" layout-align="end center">
-			<md-button type="submit" class="md-raised md-primary">Login</md-button>
+			<md-progress-circular ng-if="promise" md-mode="indeterminate" md-diameter="36px"></md-progress-circular>
+			<md-button type="submit" ng-disabled="promise" class="md-raised md-primary">Login</md-button>
 		</md-card-actions>
 	</form>
 </md-card>

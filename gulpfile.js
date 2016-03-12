@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var csso = require('gulp-csso');
 var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
 var plumber = require('gulp-plumber');
 var autoprefixer = require('gulp-autoprefixer');
 var mainBowerFiles = require('gulp-main-bower-files');
@@ -10,6 +11,7 @@ var mainBowerFiles = require('gulp-main-bower-files');
 gulp.task('script', function() {
 	return gulp.src('src/**/*.js')
 		.pipe(plumber())
+        .pipe(concat('app.js'))
 		.pipe(uglify({ mangle: false }))
 		.pipe(gulp.dest('public/src'));
 });

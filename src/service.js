@@ -18,11 +18,19 @@ app
         var token = $cookies.get('token');
 	    var pathToken = token ? '?token=' + token : '';
 
-		this.getUsers = function() {
-			return $http.get(url + pathToken);
+		this.getUsers = function(params) {
+			return $http.get(url + pathToken, {
+				params: params
+			});
 		};
 
 		this.getUser = function(id) {
 			return $http.get(url + '/' + id + pathToken);
+		};
+
+		this.countUser = function(params) {
+			return $http.get(url, {
+				params: params
+			});
 		};
 	});

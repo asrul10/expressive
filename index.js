@@ -5,10 +5,14 @@ var bodyParser = require('body-parser');
 var jwt = require('jsonwebtoken');
 var models = require('./models');
 var config = require('./config');
+var crypto = require('crypto');
 
 // Config
 var port = process.env.PORT | 3000;
 app.set('superSecret', config.secret);
+app.set('hashPassword', function(password) {
+	return crypto.createHmac('sha256', app.get('superSecret')).update(password).digest('hex');
+});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));
@@ -34,7 +38,8 @@ app.post('/api/auth', function(req, res) {
 		if (!user) {
 			res.json({ success: false, message: 'User not found'});
 		} else if (user) {
-			if (user.password != req.body.password) {
+			var hash = app.get('hashPassword');
+			if (user.password != hash(req.body.password)) {
 				res.json({ success: false, message: 'Wrong password' });
 			} else {
 				var tok = {
@@ -83,9 +88,26 @@ app.get('/api/authenticated', function(req, res) {
 
 app
 	.get('/api/user', function(req, res) {
-		User.findAll().then(function(user) {
+		var offset = 0;
+		if (req.query.offset) {
+			offset = parseInt(req.query.offset);
+		}
+		var limit = 10;
+		if (req.query.limit) {
+			limit = parseInt(req.query.limit);
+		}
+		var count = false;
+		if (req.query.count) {
+			count = req.query.count;
+		}
+		User.findAll({ offset: offset, limit: limit }).then(function(user) {
 			if (user) {
-				res.json(user);
+				User.count().then(function(total) {
+					res.json({
+						users: user,
+						countAll: total
+					});
+				});
 			} else {
 				res.json({success: false, message: 'User no data'});
 			}
