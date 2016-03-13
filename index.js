@@ -88,19 +88,29 @@ app.get('/api/authenticated', function(req, res) {
 
 app
 	.get('/api/user', function(req, res) {
+
 		var offset = 0;
 		if (req.query.offset) {
 			offset = parseInt(req.query.offset);
 		}
+
 		var limit = 10;
 		if (req.query.limit) {
 			limit = parseInt(req.query.limit);
 		}
-		var count = false;
-		if (req.query.count) {
-			count = req.query.count;
+
+		order = null;
+		if (req.query.order) {
+			var sort = req.query.sort ? req.query.sort : 'ASC';
+			order = [[req.query.order, sort]];
 		}
-		User.findAll({ offset: offset, limit: limit }).then(function(user) {
+
+		User.findAll({ 
+			offset: offset, 
+			limit: limit, 
+			attributes: req.query.attributes, 
+			order: order
+		}).then(function(user) {
 			if (user) {
 				User.count().then(function(total) {
 					res.json({
