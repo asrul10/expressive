@@ -1,0 +1,47 @@
+<md-dialog aria-label="Add" class="form-dialog">
+	<md-toolbar>
+	    <div class="md-toolbar-tools">
+	        <h2>Add User</h2>
+	        <span flex></span>
+	        <md-button class="md-icon-button" ng-click="close()">
+                <md-icon md-font-icon="zmdi-close" class="zmdi zmdi-hc-lg" aria-label="Close dialog"></md-icon>
+	        </md-button>
+	    </div>
+	</md-toolbar>
+	<form name="userForm" ng-submit="save()">
+	    <md-dialog-content class="padding">
+			<md-input-container class="md-block">
+			    <label>First Name*</label>
+			    <input type="text" required name="firstName" ng-model="user.firstName">
+			    <div ng-messages="userForm.firstName.$error">
+			        <div ng-message="required">This is required.</div>
+			    </div>
+			</md-input-container>
+			<md-input-container class="md-block">
+			    <label>Last Name*</label>
+			    <input type="text" required name="lastName" ng-model="user.lastName">
+			    <div ng-messages="userForm.lastName.$error">
+			        <div ng-message="required">This is required.</div>
+			    </div>
+			</md-input-container>
+			<md-input-container class="md-block">
+			    <label>Email*</label>
+			    <input type="email" required name="email" ng-model="user.email">
+			    <div ng-messages="userForm.email.$error">
+			        <div ng-message="required">This is required.</div>
+			    </div>
+			</md-input-container>
+			<md-input-container class="md-block">
+			    <label>Password*</label>
+			    <input type="password" required name="password" ng-model="user.password">
+			    <div ng-messages="userForm.password.$error">
+			        <div ng-message="required">This is required.</div>
+			    </div>
+			</md-input-container>
+	    	{{formMessage}}
+		    </md-dialog-content>
+	    <md-dialog-actions>
+	        <md-button type="submit" class="md-raised md-primary">Save</md-button>
+	    </md-dialog-actions>
+	</form>
+</md-dialog>

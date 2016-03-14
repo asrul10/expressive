@@ -1,11 +1,37 @@
-<md-card>
-    <md-card-title>
-        <md-card-title-text>
-            <span class="md-headline">Users</span>
-        </md-card-title-text>
-    </md-card-title>
+<md-card class="no-padding">
+    <md-toolbar class="toolbar-card alternate" ng-show="selected.length">
+        <div class="md-toolbar-tools">
+            <h2 class="md-title">{{selected.length}} <span ng-if="selected.length == 1">item</span><span ng-if="selected.length > 1">items</span> selected</h2>
+            <div flex></div>
+            <md-button ng-click="delete()" class="md-icon-button" aria-label="delete">
+                <md-icon md-font-icon="zmdi-delete" class="zmdi zmdi-hc-lg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-toolbar class="toolbar-card" ng-hide="selected.length || search">
+        <div class="md-toolbar-tools">
+            <h2 class="md-title">Users</h2>
+            <div flex></div>
+            <md-button ng-click="addUser($event)" class="md-icon-button" aria-label="add">
+                <md-icon md-font-icon="zmdi-account-add" class="zmdi zmdi-hc-lg"></md-icon>
+            </md-button>
+            <md-button ng-click="search = true" class="md-icon-button" aria-label="search">
+                <md-icon md-font-icon="zmdi-search" class="zmdi zmdi-hc-lg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-toolbar class="toolbar-card" ng-show="search">
+        <div class="md-toolbar-tools">
+            <md-icon md-font-icon="zmdi-search" class="zmdi zmdi-hc-lg"></md-icon>
+            <input class="search-toolbar" ng-model="searchModel" ng-model="model.search" type="text" placeholder="Search">
+            <div flex></div>
+            <md-button ng-click="search = false; searchModel = ''" class="md-icon-button" aria-label="close">
+                <md-icon md-font-icon="zmdi-close" class="zmdi zmdi-hc-lg"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
     <md-table-container>
-        <table md-table md-progress="promise">
+        <table md-table md-row-select ng-model="selected" md-progress="promise">
             <thead md-head md-order="order" md-on-reorder="onReorder">
                 <tr md-row>
                     <th md-column md-order-by="firstName"><span>First Name</span></th>
@@ -14,7 +40,7 @@
                 </tr>
             </thead>
             <tbody md-body>
-                <tr md-row ng-repeat="user in users">
+                <tr md-row md-select="user" md-select-id="{{user.id}}" ng-repeat="user in users">
                     <td md-cell>{{user.firstName}}</td>
                     <td md-cell>{{user.lastName}}</td>
                     <td md-cell>{{user.email}}</td>
@@ -22,5 +48,5 @@
             </tbody>
         </table>
     </md-table-container>
-    <md-table-pagination md-limit="pagination.limit" md-page="pagination.page" md-total="{{pagination.total}}" md-on-paginate="onPaginate"></md-table-pagination>
+    <md-table-pagination md-limit="pagination.limit" md-page="pagination.page" md-total="{{pagination.total}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
 </md-card>

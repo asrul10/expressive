@@ -2,6 +2,7 @@ angular.module('App', [
     "ngRoute", 
     "ngCookies", 
     "ngMaterial", 
+    "ngMessages", 
     "Service", 
     "Function", 
     "Controller",
@@ -34,7 +35,7 @@ angular.module('App', [
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('default')
             .primaryPalette('blue')
-            .accentPalette('light-blue');
+            .accentPalette('pink');
     })
 
     // Navigation

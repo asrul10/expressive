@@ -87,8 +87,24 @@ app.get('/api/authenticated', function(req, res) {
 });
 
 app
-	.get('/api/user', function(req, res) {
+	.post('/api/user', function(req, res) {
+		var userData = {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			email: req.body.email,
+			password: app.get('hashPassword')(req.body.password)
+		};
 
+		User.findOrCreate({ where: {email: req.body.email}, defaults: userData }).spread(function(user, created) {
+	        if (created) {
+				res.json({success: true, message: 'User created'});
+	        } else {
+	        	res.json({success: false, message: 'Email already exist'});
+	        }
+		});
+	})
+
+	.get('/api/user', function(req, res) {
 		var offset = 0;
 		if (req.query.offset) {
 			offset = parseInt(req.query.offset);
@@ -119,7 +135,10 @@ app
 					});
 				});
 			} else {
-				res.json({success: false, message: 'User no data'});
+				res.status(204).json({
+					success: false, 
+					message: 'User not found'
+				});
 			}
 		});
 	})
@@ -129,7 +148,34 @@ app
 			if (user) {
 				res.json(user);
 			} else {
-				res.json({success: false, message: 'User not found'});
+				res.status(204).json({
+					success: false, 
+					message: 'User not found'
+				});
+			}
+		});
+	})
+
+	.delete('/api/user', function(req, res) {
+		if (req.query.id.isArray) {
+			paramId = {
+				in: req.query.id
+			};
+		} else {
+			paramId = req.query.id;
+		}
+
+		User.destroy({ where: { id: paramId } }).then(function(user) {
+			if (user) {
+				res.json({
+					success: true, 
+					message: 'User deleted'
+				});
+			} else {
+				res.status(204).json({
+					success: false, 
+					message: 'User not found'
+				});
 			}
 		});
 	});

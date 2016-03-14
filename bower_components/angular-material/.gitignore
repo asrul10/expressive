@@ -6,5 +6,5 @@ default-theme.css
 
 # Bower and Node
 #-------------------------
-bower_components/*
-node_modules/*
+bower_components/
+node_modules/

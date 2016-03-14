@@ -16,20 +16,30 @@ app
 	.service('user', function($http, $cookies) {
 		var url = '/api/user';
         var token = $cookies.get('token');
-	    var pathToken = token ? '?token=' + token : '';
+
+        this.addUser = function(data) {
+        	data.token = token;
+        	return $http.post(url, data);
+        };
 
 		this.getUsers = function(params) {
-			return $http.get(url + pathToken, {
+			params.token = token;
+			return $http.get(url, {
 				params: params
 			});
 		};
 
 		this.getUser = function(id) {
-			return $http.get(url + '/' + id + pathToken);
+			return $http.get(url + '/' + id, {
+				params: {
+					token: token
+				}
+			});
 		};
 
-		this.countUser = function(params) {
-			return $http.get(url, {
+		this.deleteUser = function(params) {
+			params.token = token;
+			return $http.delete(url, {
 				params: params
 			});
 		};
