@@ -20,9 +20,9 @@ angular.module('App', [
         		templateUrl: "/templates/login.html",
         		controller: "LoginCtrl"
         	})
-            .when('/table', {
-                templateUrl: '/templates/table.html',
-                controller: 'TableCtrl'
+            .when('/users', {
+                templateUrl: '/templates/users.html',
+                controller: 'UsersCtrl'
             })
             .otherwise({
                 redirectTo : '/dashboard'

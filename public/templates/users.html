@@ -25,7 +25,7 @@
             <md-icon md-font-icon="zmdi-search" class="zmdi zmdi-hc-lg"></md-icon>
             <input class="search-toolbar" ng-model="searchModel" ng-model="model.search" type="text" placeholder="Search">
             <div flex></div>
-            <md-button ng-click="search = false; searchModel = ''" class="md-icon-button" aria-label="close">
+            <md-button ng-click="search = false; searchModel = null" class="md-icon-button" aria-label="close">
                 <md-icon md-font-icon="zmdi-close" class="zmdi zmdi-hc-lg"></md-icon>
             </md-button>
         </div>
@@ -37,6 +37,7 @@
                     <th md-column md-order-by="firstName"><span>First Name</span></th>
                     <th md-column md-order-by="lastName"><span>Last Name</span></th>
                     <th md-column md-order-by="email"><span>Email</span></th>
+                    <th md-column></th>
                 </tr>
             </thead>
             <tbody md-body>
@@ -44,6 +45,11 @@
                     <td md-cell>{{user.firstName}}</td>
                     <td md-cell>{{user.lastName}}</td>
                     <td md-cell>{{user.email}}</td>
+                    <td md-cell>
+                        <md-button ng-click="editUser($event, user.id)" class="md-icon-button right" aria-label="edit">
+                            <md-icon md-font-icon="zmdi-edit" class="zmdi zmdi-hc-lg"></md-icon>
+                        </md-button>
+                    </td>
                 </tr>
             </tbody>
         </table>

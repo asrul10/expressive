@@ -1,7 +1,7 @@
 <md-dialog aria-label="Add" class="form-dialog">
 	<md-toolbar>
 	    <div class="md-toolbar-tools">
-	        <h2>Add User</h2>
+	        <h2>{{title}}</h2>
 	        <span flex></span>
 	        <md-button class="md-icon-button" ng-click="close()">
                 <md-icon md-font-icon="zmdi-close" class="zmdi zmdi-hc-lg" aria-label="Close dialog"></md-icon>
@@ -31,12 +31,16 @@
 			        <div ng-message="required">This is required.</div>
 			    </div>
 			</md-input-container>
-			<md-input-container class="md-block">
+			<md-input-container class="md-block" ng-if="!password">
 			    <label>Password*</label>
 			    <input type="password" required name="password" ng-model="user.password">
 			    <div ng-messages="userForm.password.$error">
 			        <div ng-message="required">This is required.</div>
 			    </div>
+			</md-input-container>
+			<md-input-container class="md-block" ng-if="password">
+			    <label>Password</label>
+			    <input type="password" name="password" ng-model="user.password">
 			</md-input-container>
 	    	{{formMessage}}
 		    </md-dialog-content>

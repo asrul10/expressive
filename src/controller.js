@@ -47,7 +47,7 @@ angular.module('Controller', [])
         $scope.top = height/6;
     })
 
-    .controller('TableCtrl', function($scope, $location, $q, $mdDialog, user) {
+    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, user) {
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -79,7 +79,8 @@ angular.module('Controller', [])
                 limit: $scope.pagination.limit,
                 offset: offset,
                 order: $scope.order.replace('-', ''),
-                sort: sort
+                sort: sort,
+                search: $scope.searchModel
             });
             $scope.selected = [];
         }
@@ -96,7 +97,8 @@ angular.module('Controller', [])
                 limit: $scope.pagination.limit,
                 offset: offset,
                 order: order,
-                sort: sort
+                sort: sort,
+                search: $scope.searchModel
             });
         };
 
@@ -106,7 +108,8 @@ angular.module('Controller', [])
                 limit: limit, 
                 offset: offset,
                 order: $scope.order.replace('-', ''),
-                sort: sort
+                sort: sort,
+                search: $scope.searchModel
             });
         };
 
@@ -122,33 +125,79 @@ angular.module('Controller', [])
             });
         };
 
+        $scope.$watch('searchModel', function() {
+            if ($scope.searchModel) {
+                getUser({
+                    limit: $scope.pagination.limit, 
+                    order: $scope.order.replace('-', ''),
+                    sort: sort,
+                    search: $scope.searchModel
+                });
+            } else {
+                getUser({limit: $scope.pagination.limit});
+            }
+        });
+
         $scope.addUser = function(ev) {
             $mdDialog.show({
-                controller: addFunction,
-                templateUrl: 'templates/add.html',
+                controller: function($scope, $mdDialog) {
+                    $scope.title = 'Add User';
+                    $scope.save = function() {
+                        var data = this.user;
+                        user.saveUser(data).then(function(res) {
+                            if (res.data.success) {
+                                reloadUser();
+                                $mdDialog.hide();
+                            } else {
+                                $scope.formMessage = res.data.message;
+                            }
+                        });
+                    };
+
+                    $scope.close = function() {
+                        $mdDialog.cancel();
+                    };
+                },
+                templateUrl: 'templates/form-user.html',
                 parent: angular.element(document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true
-            }).then(function() {
             });
         };
 
-        function addFunction($scope, $mdDialog) {
-            $scope.save = function() {
-                var data = this.user;
-                user.addUser(data).then(function(res) {
-                    console.log(res);
-                    if (res.data.success) {
-                        reloadUser();
-                        $mdDialog.hide();
-                    } else {
-                        $scope.formMessage = res.data.message;
-                    }
-                });
-            };
+        $scope.editUser = function(ev, id) {
+            $mdDialog.show({
+                controller: function($scope, $mdDialog) {
+                    $scope.title = 'Edit User';
+                    $scope.password = true;
+                    user.getUser(id).then(function(user) {
+                        user.data.password = null;
+                        $scope.user = user.data;
+                    }, function(err) {
+                        console.log(err);
+                    });
 
-            $scope.close = function() {
-                $mdDialog.cancel();
-            };
-        }
+                    $scope.save = function() {
+                        var data = this.user;
+                        data.id = id;
+                        user.saveUser(data).then(function(res) {
+                            if (res.data.success) {
+                                reloadUser();
+                                $mdDialog.hide();
+                            } else {
+                                $scope.formMessage = res.data.message;
+                            }
+                        });
+                    };
+
+                    $scope.close = function() {
+                        $mdDialog.cancel();
+                    };
+                },
+                templateUrl: 'templates/form-user.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
     });

@@ -17,7 +17,7 @@ app
 		var url = '/api/user';
         var token = $cookies.get('token');
 
-        this.addUser = function(data) {
+        this.saveUser = function(data) {
         	data.token = token;
         	return $http.post(url, data);
         };

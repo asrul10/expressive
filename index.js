@@ -92,16 +92,30 @@ app
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			email: req.body.email,
-			password: app.get('hashPassword')(req.body.password)
+			password: req.body.password
 		};
 
-		User.findOrCreate({ where: {email: req.body.email}, defaults: userData }).spread(function(user, created) {
-	        if (created) {
-				res.json({success: true, message: 'User created'});
-	        } else {
-	        	res.json({success: false, message: 'Email already exist'});
-	        }
-		});
+		if (req.body.id) {
+			if (!req.body.password) {
+				delete userData.password;
+			}
+			User.update(userData, { where: {id: req.body.id} }).then(function(user) {
+				if (user) {
+					res.json({success: true, message: 'User updated'});
+				} else {
+		        	res.json({success: false, message: 'Failed update'});
+				}
+			});
+		} else {
+			userData.password = app.get('hashPassword')(userData.password);
+			User.findOrCreate({ where: {email: req.body.email}, defaults: userData }).spread(function(user, created) {
+		        if (created) {
+					res.json({success: true, message: 'User created'});
+		        } else {
+		        	res.json({success: false, message: 'Email already exist'});
+		        }
+			});
+		}
 	})
 
 	.get('/api/user', function(req, res) {
@@ -121,18 +135,29 @@ app
 			order = [[req.query.order, sort]];
 		}
 
-		User.findAll({ 
+		var options = { 
 			offset: offset, 
 			limit: limit, 
 			attributes: req.query.attributes, 
 			order: order
-		}).then(function(user) {
+		};
+
+		if (req.query.search) {
+			var val = { $like: '%' + req.query.search + '%' };
+			options.where = {
+				$or: [
+					{ firstName: val },
+					{ lastName: val },
+					{ email: val }
+			    ]
+			};
+		}
+
+		User.findAndCountAll(options).then(function(user) {
 			if (user) {
-				User.count().then(function(total) {
-					res.json({
-						users: user,
-						countAll: total
-					});
+				res.json({
+					users: user.rows,
+					countAll: user.count
 				});
 			} else {
 				res.status(204).json({
