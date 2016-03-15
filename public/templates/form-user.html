@@ -31,6 +31,12 @@
 			        <div ng-message="required">This is required.</div>
 			    </div>
 			</md-input-container>
+			<div flex="50" ng-repeat="group in groups">
+				<md-checkbox ng-checked="exists(group.id, selected)"  ng-click="toggle(group.id, selected)">
+					{{group.groupName}}
+				</md-checkbox>
+            </div>
+            <input type="hidden" name="groups" ng-model="user.groups">
 			<md-input-container class="md-block" ng-if="!password">
 			    <label>Password*</label>
 			    <input type="password" required name="password" ng-model="user.password">

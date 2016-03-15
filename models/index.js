@@ -20,8 +20,12 @@ module.exports.user = sequelize.define('user', {
         field: 'last_name'
     },
     email: {
-    	type: Sequelize.STRING(25),
+    	type: Sequelize.STRING(255),
     	field: 'email'
+    },
+    groups: {
+        type: Sequelize.TEXT,
+        field: 'groups'
     },
     password: {
     	type: Sequelize.TEXT,
@@ -29,6 +33,15 @@ module.exports.user = sequelize.define('user', {
     }
 }, {
 	 freezeTableName: true,
+});
+
+module.exports.userGroup = sequelize.define('user_group', {
+    groupName : {
+        type: Sequelize.STRING,
+        field: 'group_name'
+    }
+}, {
+    freezeTableName: true,
 });
 
 // export connection

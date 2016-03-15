@@ -1,0 +1,25 @@
+<md-dialog aria-label="Add" class="form-dialog">
+	<md-toolbar>
+	    <div class="md-toolbar-tools">
+	        <h2>{{title}}</h2>
+	        <span flex></span>
+	        <md-button class="md-icon-button" ng-click="close()">
+                <md-icon md-font-icon="zmdi-close" class="zmdi zmdi-hc-lg" aria-label="Close dialog"></md-icon>
+	        </md-button>
+	    </div>
+	</md-toolbar>
+	<form name="groupForm" ng-submit="save()">
+	    <md-dialog-content class="padding">
+			<md-input-container class="md-block">
+			    <label>Group Name*</label>
+			    <input type="text" required name="groupName" ng-model="group.groupName">
+			    <div ng-messages="groupForm.firstName.$error">
+			        <div ng-message="required">This is required.</div>
+			    </div>
+			</md-input-container>
+		</md-dialog-content>
+	    <md-dialog-actions>
+	        <md-button type="submit" class="md-raised md-primary">Save</md-button>
+	    </md-dialog-actions>
+	</form>
+</md-dialog>

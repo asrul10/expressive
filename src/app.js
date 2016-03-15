@@ -24,6 +24,10 @@ angular.module('App', [
                 templateUrl: '/templates/users.html',
                 controller: 'UsersCtrl'
             })
+            .when('/groups', {
+                templateUrl: '/templates/groups.html',
+                controller: 'GroupsCtrl'
+            })
             .otherwise({
                 redirectTo : '/dashboard'
             });

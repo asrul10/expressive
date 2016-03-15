@@ -13,6 +13,7 @@ app
 		};
 	})
 
+	// User
 	.service('user', function($http, $cookies) {
 		var url = '/api/user';
         var token = $cookies.get('token');
@@ -38,6 +39,42 @@ app
 		};
 
 		this.deleteUser = function(params) {
+			params.token = token;
+			return $http.delete(url, {
+				params: params
+			});
+		};
+	})
+
+	// Group
+	.service('group', function($http, $cookies) {
+		var url = '/api/group';
+        var token = $cookies.get('token');
+
+        this.saveGroup = function(data) {
+        	data.token = token;
+        	return $http.post(url, data);
+        };
+
+		this.getGroups = function(params) {
+			if (!params) {
+				params = [];
+			}
+			params.token = token;
+			return $http.get(url, {
+				params: params
+			});
+		};
+
+		this.getGroup = function(id) {
+			return $http.get(url + '/' + id, {
+				params: {
+					token: token
+				}
+			});
+		};
+
+		this.deleteGroup = function(params) {
 			params.token = token;
 			return $http.delete(url, {
 				params: params
