@@ -322,8 +322,15 @@ angular.module('Controller', [])
                     sort: sort,
                     search: $scope.searchModel
                 });
+                $scope.pagination.page = 1;
             } else {
-                getGroup({limit: $scope.pagination.limit});
+                getGroup({
+                    limit: $scope.pagination.limit, 
+                    order: $scope.order.replace('-', ''),
+                    sort: sort,
+                    search: $scope.searchModel
+                });
+                $scope.pagination.page = 1;
             }
         });
 

@@ -85,14 +85,16 @@ app.use(function(req, res, next) {
 	if (token) {
 		jwt.verify(token, app.get('superSecret'), function (err, decoded) {
 			if (err) {
-				return res.json({ success: false, message: 'Failed authenticate' });
+				return res.status(401).json({ 
+					success: false, message: 'Failed authenticate' 
+				});
 			} else {
 				req.decoded = decoded;
 				next();
 			}
 		});
 	} else {
-		return res.status(403).send({
+		return res.status(403).json({
 			success: false,
 			message: 'No token'
 		});
