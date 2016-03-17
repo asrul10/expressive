@@ -27,11 +27,11 @@ angular.module('Controller', [])
             $location.path('/home');
         }
         $scope.promise = false;
+        
     	$scope.doLogin = function() {
             $scope.promise = true;
             auth.doLogin(this.user).then(function(res) {
                 $cookies.put('token', res.data.token);
-                console.log('tes');
                 if (res.data.success) {
                     $window.location.href = '/home';
                 } else {
@@ -275,8 +275,6 @@ angular.module('Controller', [])
             });
             $scope.selected = [];
         }
-
-        getGroup({limit: $scope.pagination.limit});
 
         $scope.onReorder = function(order) {
             sort = 'ASC';
