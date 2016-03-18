@@ -9,107 +9,90 @@ var crypto = require('crypto');
 
 // Config
 var port = process.env.PORT | 80;
-app.set('superSecret', config.secret);
-app.set('hashPassword', function(password) {
-	return crypto.createHmac('sha256', app.get('superSecret')).update(password).digest('hex');
-});
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(morgan('dev'));
+app.
+	set('superSecret', config.secret)
+	.set('hashPassword', function(password) {
+		return crypto.createHmac('sha256', app.get('superSecret')).update(password).digest('hex');
+	})
+	.use(bodyParser.urlencoded({ extended: false }))
+	.use(bodyParser.json())
+	.use(morgan('dev'));
 
 // Model
 var User = models.user;
 var Group = models.userGroup;
 
-// Sync
-// User.sync({ force: true }).then(function() {
-// 	User.create({
-// 		firstName: 'Asrul',
-// 		lastName: 'Hanafi',
-// 		email: 'hanafi.asrul@gmail.com',
-// 		groups: JSON.stringify([1, 2]),
-// 		password: app.get('hashPassword')('password')
-// 	});
-// });
-// Group.sync({ force: true }).then(function() {
-// 	Group.create({
-// 		groupName: 'Admin'
-// 	});
-// 	Group.create({
-// 		groupName: 'Member'
-// 	});
-// });
-
-// Route Client
-app.use(express.static(__dirname + '/public'));
-app.get('*', function(req, res, next) {
-	if (req.url.indexOf('/api/')) {
-		res.sendfile('public/index.html');
-	} else {
-		next();
-	}
-});
-
-// REST
-app.post('/api/auth', function(req, res) {
-	User.findOne({
-		where: {email: req.body.email} 
-	}).then(function(user) {
-		if (!user) {
-			res.json({ success: false, message: 'User not found'});
-		} else if (user) {
-			var hash = app.get('hashPassword');
-			if (user.password != hash(req.body.password)) {
-				res.json({ success: false, message: 'Wrong password' });
-			} else {
-				var tok = {
-					id: user.id,
-					email: user.email
-				};
-				var token = jwt.sign(tok, app.get('superSecret'), {
-					expiresIn: '7d'
-				});
-
-				res.json({
-					success: true,
-					message: 'Success login',
-					token: token
-				});
-			}
-		}
-	});
-});
-
-app.use(function(req, res, next) {
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	if (token) {
-		jwt.verify(token, app.get('superSecret'), function (err, decoded) {
-			if (err) {
-				return res.status(401).json({ 
-					success: false, message: 'Failed authenticate' 
-				});
-			} else {
-				req.decoded = decoded;
-				next();
-			}
-		});
-	} else {
-		return res.status(403).json({
-			success: false,
-			message: 'No token'
-		});
-	}
-});
-
-app.get('/api/authenticated', function(req, res) {
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	var decoded = jwt.decode(token);
-
-	res.json({ success: true, message: 'Loged in', user: decoded});
-});
-
-// User
+// Route
 app
+	// Client
+	.use(express.static(__dirname + '/public'))
+	.get('*', function(req, res, next) {
+		if (req.url.indexOf('/api/')) {
+			res.sendfile('public/index.html');
+		} else {
+			next();
+		}
+	})
+
+	// REST
+	.post('/api/auth', function(req, res) {
+		User.findOne({
+			where: {email: req.body.email} 
+		}).then(function(user) {
+			if (!user) {
+				res.json({ success: false, message: 'User not found'});
+			} else if (user) {
+				var hash = app.get('hashPassword');
+				if (user.password != hash(req.body.password)) {
+					res.json({ success: false, message: 'Wrong password' });
+				} else {
+					var tok = {
+						id: user.id,
+						email: user.email
+					};
+					var token = jwt.sign(tok, app.get('superSecret'), {
+						expiresIn: '7d'
+					});
+
+					res.json({
+						success: true,
+						message: 'Success login',
+						token: token
+					});
+				}
+			}
+		});
+	})
+
+	.use(function(req, res, next) {
+		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+		if (token) {
+			jwt.verify(token, app.get('superSecret'), function (err, decoded) {
+				if (err) {
+					return res.status(401).json({ 
+						success: false, message: 'Failed authenticate' 
+					});
+				} else {
+					req.decoded = decoded;
+					next();
+				}
+			});
+		} else {
+			return res.status(403).json({
+				success: false,
+				message: 'No token'
+			});
+		}
+	})
+
+	.get('/api/authenticated', function(req, res) {
+		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+		var decoded = jwt.decode(token);
+
+		res.json({ success: true, message: 'Loged in', user: decoded});
+	})
+
+	// User
 	.post('/api/user', function(req, res) {
 		var userData = {
 			firstName: req.body.firstName,
@@ -227,10 +210,9 @@ app
 				});
 			}
 		});
-	});
+	})
 	
-// Group
-app
+	// Group
 	.post('/api/group', function(req, res) {
 		var groupData = {
 			groupName: req.body.groupName,

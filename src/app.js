@@ -43,9 +43,9 @@ angular.module('App', [
     })
 
     // Navigation
-    .directive('navMenu', function () {
+    .directive('sideNav', function () {
         return {
             restrict: 'E',
-            templateUrl: 'templates/side-menu.html'
+            templateUrl: 'templates/side-nav.html'
         };
     });

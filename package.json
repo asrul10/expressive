@@ -1,7 +1,6 @@
 {
   "name": "expressisve",
   "version": "0.4.9",
-  "private": true,
   "description": "expressisve",
   "main": "index.js",
   "author": "Asrul Hanafi <hanafi.asrul@gmail.com>",

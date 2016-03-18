@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="App">
 <head>
-	<title>Express</title>
+	<title>Expressive</title>
 	<base href="/">
 	<meta content='width=device-width, initial-scale=1, user-scalable=0' name='viewport' />
 	<link rel="stylesheet" type="text/css" href="dist/angular-material/angular-material.min.css">
@@ -10,30 +10,9 @@
 	<link rel="stylesheet" type="text/css" href="style/main.css">
 </head>
 <body>
-	<nav layout="row" flex ng-controller="NavCtrl">
-	    <md-toolbar>
-	        <div class="md-toolbar-tools">
-	            <md-button class="md-icon-button" aria-label="menu" ng-click="toggleLeft()">
-		            <md-icon md-font-icon="zmdi-menu" class="zmdi zmdi-hc-lg"></md-icon>
-	            </md-button>
-	            <h2>
-		        	<span><a href="home">Expressive</a></span>
-		        </h2>
-	        </div>
-	    </md-toolbar>
-	    <md-sidenav class="md-sidenav-left" md-component-id="left">
-	        <md-toolbar class="no-shadow">
-	            <h1 class="md-toolbar-tools">MENU</h1>
-	        </md-toolbar>
-	        <md-content>
-				<nav-menu></nav-menu>
-	        </md-content>
-	    </md-sidenav>
-	</nav>
-	<section>
-		<md-content flex layout-padding ng-view>
-	    </md-content>
-	</section>
+	<div ng-view>
+		<!-- View Page -->
+    </div>
 
 	<!-- Script -->
 	<script src="dist/angular/angular.min.js"></script>

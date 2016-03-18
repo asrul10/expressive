@@ -1,11 +1,62 @@
 $background: #F5F5F5;
 $color: #757575;
+$color-disabled: #BDBDBD;
+$blue: #1E88E5;
 
 body, 
 md-content, 
 md-sidenav {
 	background: $background;
 	color: $color;
+}
+
+a {
+	color: $blue;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.logo-small {
+    width: 60px;
+    margin-bottom: 15px;
+}
+
+.md-headline-small {
+    font-size: 21px;
+}
+
+.or-login {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: $color-disabled;
+}
+
+.md-button:not(.md-icon-button).md-social {
+	text-transform: none;
+	
+	md-icon {
+		padding-left: 7px;
+		padding-right: 7px;
+	}
+
+	&.md-social-google,
+	&.md-social-google:hover,
+	&.md-social-google:focus,
+	&.md-social-google:active,
+	&.md-social-google:visited {
+		background-color: #D32F2F;
+	}
+
+	&.md-social-facebook,
+	&.md-social-facebook:hover,
+	&.md-social-facebook:focus,
+	&.md-social-facebook:active,
+	&.md-social-facebook:visited {
+		background-color: #1976D2;
+	}
 }
 
 .menu-list {

@@ -1,5 +1,7 @@
-angular.module('Controller', [])
-    // Controller
+var controller = angular.module('Controller', []);
+
+// Controller
+controller
     .controller('NavCtrl', function($scope, $mdSidenav, auth, $cookies, $window) {
         var userAuth = checkAuth($cookies, auth);
         $scope.loggedin = false;
@@ -26,8 +28,9 @@ angular.module('Controller', [])
         if (checkAuth($cookies, auth)) {
             $location.path('/home');
         }
+        activeNav = false;
         $scope.promise = false;
-        
+
     	$scope.doLogin = function() {
             $scope.promise = true;
             auth.doLogin(this.user).then(function(res) {
@@ -44,7 +47,7 @@ angular.module('Controller', [])
             });
     	};
         var height = $window.innerHeight;
-        $scope.top = height/6;
+        $scope.top = height/14;
     })
 
     .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, user, group) {

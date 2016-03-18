@@ -1,22 +1,47 @@
-<md-card class="card-small" style="margin-top: {{top}}px">
-	<md-card-title>
-		<md-card-title-text>
-			<span class="md-headline">Login</span>
-			<p ng-if="message">{{message}}</p>
-		</md-card-title-text>
-	</md-card-title>
-	<form ng-submit="doLogin()" class="signin-padding">
-		<md-input-container class="md-block">
-			<label>Email</label>
-			<input ng-model="user.email" type="email">
-		</md-input-container>
-		<md-input-container class="md-block">
-			<label>Password</label>
-			<input ng-model="user.password" type="password">
-		</md-input-container>
-		<md-card-actions layout="row" layout-align="end center">
-			<md-progress-circular ng-if="promise" md-mode="indeterminate" md-diameter="36px"></md-progress-circular>
-			<md-button type="submit" ng-disabled="promise" class="md-raised md-primary">Login</md-button>
-		</md-card-actions>
-	</form>
-</md-card>
+<md-content layout-padding>
+	<md-card ng-init="user.email.length ? alert('hallo') : alert('bad')" class="card-small" style="margin-top: {{top}}px">
+		<md-card-title>
+			<md-card-title-text>
+				<img src="./images/expressive.png" class="logo-small" alt="expressive">
+				<span class="md-headline-small">Log in to your account</span>
+				<p ng-if="message">{{message}}</p>
+			</md-card-title-text>
+		</md-card-title>
+		<form ng-submit="doLogin()" class="signin-padding">
+			<md-input-container class="md-block">
+				<label>Email</label>
+				<input ng-model="user.email" type="email">
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Password</label>
+				<input ng-model="user.password" type="password">
+			</md-input-container>
+			<div layout="row">
+				<md-checkbox ng-model="remember" aria-label="Remember me">
+					Remember Me
+				</md-checkbox>
+	            <span flex></span>
+				<a href="#" title="Forgot Passowrd?">Forgot Password?</a>
+			</div>
+			<md-card-actions>
+				<div layout="row" layout-align="end">
+					<md-progress-circular ng-if="promise" md-mode="indeterminate" md-diameter="36px"></md-progress-circular>
+					<md-button type="submit" ng-disabled="promise" class="md-raised md-primary">Log in</md-button>
+				</div>
+				<div layout="row" class="or-login" layout-align="center">
+					OR
+				</div>
+				<div layout="row" layout-align="center">
+					<md-button flex="50" class="md-raised md-primary md-social md-social-google">
+		                <md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
+						<span>Log in with Google</span>
+					</md-button>
+					<md-button flex="50" class="md-raised md-primary md-social md-social-facebook">
+		                <md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
+						<span>Log in with Facebook</span>
+					</md-button>
+				</div>
+			</md-card-actions>
+		</form>
+	</md-card>
+</md-content>
