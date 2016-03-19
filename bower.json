@@ -1,28 +1,31 @@
 {
-  "name": "myigniter-4",
-  "description": "myIgniter is custom framework",
+  "name": "Expressive",
+  "version": "0.5.0",
+  "description": "Expressive starter projects pack",
   "main": "index.js",
   "authors": [
     "Asrul Hanafi <hanafi.asrul@gmail.com>"
   ],
   "license": "ISC",
-  "moduleType": [],
-  "homepage": "",
   "private": true,
   "dependencies": {
     "angular-material": "~1.0.6",
-    "angular-route": "~1.5.0",
-    "angular": "~1.5.0",
-    "angular-aria": "^1.5.0",
-    "angular-messages": "^1.5.0",
-    "angular-animate": "^1.5.0",
-    "angular-cookies": "^1.5.0",
+    "angular-route": "^1.5.2",
+    "angular": "^1.5.2",
+    "angular-aria": "^1.5.2",
+    "angular-messages": "^1.5.2",
+    "angular-animate": "^1.5.2",
+    "angular-cookies": "^1.5.2",
     "angular-material-data-table": "^0.9.12",
-    "material-design-iconic-font": "^2.2.0"
+    "material-design-iconic-font": "^2.2.0",
+    "angular-resource": "^1.5.2"
   },
   "overrides": {
     "angular": {
       "main": "./angular.min.js"
+    },
+    "angular-resource": {
+      "main": "./angular-resource.min.js"
     },
     "angular-material": {
       "main": [
@@ -45,9 +48,6 @@
     "angular-cookies": {
       "main": "./angular-cookies.min.js"
     },
-    "angular-messages": {
-      "main": "./angular-messages.min.js"
-    },
     "angular-material-data-table": {
       "main": [
         "./dist/md-data-table.min.css",
@@ -60,5 +60,8 @@
         "./dist/fonts/*.*"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "^1.4.0"
   }
 }

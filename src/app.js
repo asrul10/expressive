@@ -1,12 +1,12 @@
 angular.module('App', [
     "ngRoute", 
+    "ngResource",
     "ngCookies", 
     "ngMaterial", 
     "ngMessages", 
+    "md.data.table",
     "Service", 
-    "Function", 
-    "Controller",
-    "md.data.table"
+    "Controller"
 ])
 
     // Route

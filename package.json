@@ -1,10 +1,11 @@
 {
-  "name": "expressisve",
-  "version": "0.4.9",
-  "description": "expressisve",
+  "name": "Expressisve",
+  "version": "0.5.0",
+  "description": "Expressive starter projects pack",
   "main": "index.js",
   "author": "Asrul Hanafi <hanafi.asrul@gmail.com>",
   "license": "ISC",
+  "private": true,
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
@@ -17,6 +18,7 @@
   },
   "dependencies": {
     "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
     "jsonwebtoken": "^5.7.0",
     "morgan": "^1.7.0",

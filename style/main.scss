@@ -1,7 +1,10 @@
 $background: #F5F5F5;
 $color: #757575;
 $color-disabled: #BDBDBD;
-$blue: #1E88E5;
+
+// Common Color
+$success: #1E88E5;
+$danger: #EF5350;
 
 body, 
 md-content, 
@@ -10,8 +13,8 @@ md-sidenav {
 	color: $color;
 }
 
-a {
-	color: $blue;
+a.anchor {
+	color: $success;
 	text-decoration: none;
 
 	&:hover {
@@ -19,13 +22,17 @@ a {
 	}
 }
 
+.success {
+	color: $success;
+}
+
+.danger {
+	color: $danger;
+}
+
 .logo-small {
     width: 60px;
     margin-bottom: 15px;
-}
-
-.md-headline-small {
-    font-size: 21px;
 }
 
 .or-login {
@@ -36,7 +43,9 @@ a {
 
 .md-button:not(.md-icon-button).md-social {
 	text-transform: none;
-	
+	width: 100%;
+	margin: 10px;
+
 	md-icon {
 		padding-left: 7px;
 		padding-right: 7px;

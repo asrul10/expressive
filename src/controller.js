@@ -2,12 +2,13 @@ var controller = angular.module('Controller', []);
 
 // Controller
 controller
-    .controller('NavCtrl', function($scope, $mdSidenav, auth, $cookies, $window) {
-        var userAuth = checkAuth($cookies, auth);
-        $scope.loggedin = false;
-        if (userAuth) {
+    .controller('NavCtrl', function($scope, $mdSidenav, $cookies, Auth, $window) {
+        Auth.get(function(res) {
             $scope.loggedin = true;
-        }
+        }, function(err) {
+            $scope.loggedin = false;
+        });
+
         $scope.toggleLeft = function() {
     	    $mdSidenav('left').toggle();
     	};
@@ -24,33 +25,32 @@ controller
         // $location.path('/login');
     })
 
-    .controller('LoginCtrl', function($scope, $window, auth, $cookies, $location) {
-        if (checkAuth($cookies, auth)) {
+    .controller('LoginCtrl', function($scope, $window, Auth, $cookies, $location) {
+        $scope.loggedin = Auth.get(function(res) {
             $location.path('/home');
-        }
-        activeNav = false;
+        });
         $scope.promise = false;
 
     	$scope.doLogin = function() {
             $scope.promise = true;
-            auth.doLogin(this.user).then(function(res) {
-                $cookies.put('token', res.data.token);
-                if (res.data.success) {
+            Auth.save(this.user, function(res) {
+                $cookies.put('token', res.token);
+                if (res.success) {
                     $window.location.href = '/home';
                 } else {
                     $scope.promise = false;
-                    $scope.message = res.data.message;
+                    $scope.message = res.message;
                 }
             }, function(err) {
                 $scope.promise = false;
-                console.log(err);
+                console.log(err);                 
             });
     	};
         var height = $window.innerHeight;
         $scope.top = height/14;
     })
 
-    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, user, group) {
+    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, User, Group) {
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -68,9 +68,9 @@ controller
             if (!params.order) {
                 params.order = 'firstName';
             }
-            user.getUsers(params).then(function(res) {
-                $scope.users = res.data.users;
-                $scope.pagination.total = res.data.countAll;
+            User.get(params, function(res) {
+                $scope.users = res.users;
+                $scope.pagination.total = res.countAll;
                 deferred.resolve();
             }, function(err) {
                 $location.path('/login');
@@ -87,8 +87,6 @@ controller
             });
             $scope.selected = [];
         }
-
-        getUser({limit: $scope.pagination.limit});
 
         $scope.onReorder = function(order) {
             sort = 'ASC';
@@ -121,9 +119,10 @@ controller
             $scope.selected.forEach( function(element, index) {
                 id.push(element.id);
             });
-            var params = {id: id};
+            var params = {ids: id};
 
-            user.deleteUser(params).then(function(res) {
+            User.delete(params, function(res) {
+                console.log(res);
                 reloadUser();
             });
         };
@@ -148,8 +147,8 @@ controller
                     $scope.selected = [1];
                     $scope.user = { groups: '[1]' };
 
-                    group.getGroups().then(function (res) {
-                        $scope.groups = res.data.groups;
+                    Group.get(function(res) {
+                        $scope.groups = res.groups;
                     });
 
                     $scope.toggle = function(item, list) {
@@ -164,13 +163,12 @@ controller
                     };
 
                     $scope.save = function() {
-                        var data = this.user;
-                        user.saveUser(data).then(function(res) {
-                            if (res.data.success) {
+                        User.save(this.user, function(res) {
+                            if (res.success) {
                                 reloadUser();
                                 $mdDialog.hide();
                             } else {
-                                $scope.formMessage = res.data.message;
+                                $scope.formMessage = res.message;
                             }
                         });
                     };
@@ -193,8 +191,8 @@ controller
                     $scope.password = true;
                     $scope.selected = [];
 
-                    group.getGroups().then(function (res) {
-                        $scope.groups = res.data.groups;
+                    Group.get(function(res) {
+                        $scope.groups = res.groups;
                     });
 
                     $scope.toggle = function(item, list) {
@@ -208,23 +206,23 @@ controller
                         return list.indexOf(item) > -1;
                     };
 
-                    user.getUser(id).then(function(user) {
-                        user.data.password = null;
-                        $scope.user = user.data;
-                        $scope.selected = JSON.parse(user.data.groups);
+                    User.get({id: id}, function(res) {
+                        res.password = null;
+                        $scope.user = res;
+                        $scope.selected = JSON.parse(res.groups);
                     }, function(err) {
                         console.log(err);
                     });
 
                     $scope.save = function() {
-                        var data = this.user;
-                        data.id = id;
-                        user.saveUser(data).then(function(res) {
-                            if (res.data.success) {
+                        var id = this.user.id;
+
+                        User.update({id: id}, this.user, function(res) {
+                            if (res.success) {
                                 reloadUser();
                                 $mdDialog.hide();
                             } else {
-                                $scope.formMessage = res.data.message;
+                                $scope.formMessage = res.message;
                             }
                         });
                     };
@@ -241,7 +239,7 @@ controller
         };
     })
 
-    .controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, group) {
+    .controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, Group) {
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -259,9 +257,9 @@ controller
             if (!params.order) {
                 params.order = 'groupName';
             }
-            group.getGroups(params).then(function(res) {
-                $scope.groups = res.data.groups;
-                $scope.pagination.total = res.data.countAll;
+            Group.get(params, function(res) {
+                $scope.groups = res.groups;
+                $scope.pagination.total = res.countAll;
                 deferred.resolve();
             }, function(err) {
                 $location.path('/login');
@@ -310,9 +308,9 @@ controller
             $scope.selected.forEach( function(element, index) {
                 id.push(element.id);
             });
-            var params = {id: id};
+            var params = {ids: id};
 
-            group.deleteGroup(params).then(function(res) {
+            Group.delete(params, function(res) {
                 reloadGroup();
             });
         };
@@ -342,13 +340,12 @@ controller
                 controller: function($scope, $mdDialog) {
                     $scope.title = 'Add Group';
                     $scope.save = function() {
-                        var data = this.group;
-                        group.saveGroup(data).then(function(res) {
-                            if (res.data.success) {
+                        Group.save(this.group, function(res) {
+                            if (res.success) {
                                 reloadGroup();
                                 $mdDialog.hide();
                             } else {
-                                $scope.formMessage = res.data.message;
+                                $scope.formMessage = res.message;
                             }
                         });
                     };
@@ -368,21 +365,20 @@ controller
             $mdDialog.show({
                 controller: function($scope, $mdDialog) {
                     $scope.title = 'Edit Group';
-                    group.getGroup(id).then(function(group) {
-                        $scope.group = group.data;
+                    Group.get({ id: id}, function(res) {
+                        $scope.group = res;
                     }, function(err) {
                         console.log(err);
                     });
 
                     $scope.save = function() {
-                        var data = this.group;
-                        data.id = id;
-                        group.saveGroup(data).then(function(res) {
-                            if (res.data.success) {
+                        var id = this.group.id;
+                        Group.update({id: id}, this.group, function(res) {
+                            if (res.success) {
                                 reloadGroup();
                                 $mdDialog.hide();
                             } else {
-                                $scope.formMessage = res.data.message;
+                                $scope.formMessage = res.message;
                             }
                         });
                     };

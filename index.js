@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
 var jwt = require('jsonwebtoken');
 var models = require('./models');
 var config = require('./config');
@@ -16,7 +17,10 @@ app.
 	})
 	.use(bodyParser.urlencoded({ extended: false }))
 	.use(bodyParser.json())
-	.use(morgan('dev'));
+	.use(cookieParser());
+if (process.env.NODE_ENV !== 'production') {
+	app.use(morgan('dev'));
+}
 
 // Model
 var User = models.user;
@@ -50,43 +54,38 @@ app
 						id: user.id,
 						email: user.email
 					};
-					var token = jwt.sign(tok, app.get('superSecret'), {
-						expiresIn: '7d'
-					});
 
-					res.json({
-						success: true,
-						message: 'Success login',
-						token: token
-					});
+					var remember = {};
+					if (!req.body.remember) {
+						remember = {  expiresIn: '2d' };
+					}
+
+					var token = jwt.sign(tok, app.get('superSecret'), remember);
+
+					res.json({ success: true, message: 'Success login', token: token });
 				}
 			}
 		});
 	})
 
 	.use(function(req, res, next) {
-		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+		var token = req.body.token || req.query.token || req.cookies.token;
 		if (token) {
 			jwt.verify(token, app.get('superSecret'), function (err, decoded) {
 				if (err) {
-					return res.status(401).json({ 
-						success: false, message: 'Failed authenticate' 
-					});
+					return res.status(401).json({ success: false, message: 'Failed authenticate' });
 				} else {
 					req.decoded = decoded;
 					next();
 				}
 			});
 		} else {
-			return res.status(403).json({
-				success: false,
-				message: 'No token'
-			});
+			return res.status(403).json({ success: false, message: 'No token' });
 		}
 	})
 
-	.get('/api/authenticated', function(req, res) {
-		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+	.get('/api/auth', function(req, res) {
+		var token = req.body.token || req.query.token || req.cookies.token;
 		var decoded = jwt.decode(token);
 
 		res.json({ success: true, message: 'Loged in', user: decoded});
@@ -102,27 +101,34 @@ app
 			password: req.body.password
 		};
 
-		if (req.body.id) {
-			if (!req.body.password) {
-				delete userData.password;
-			}
-			User.update(userData, { where: {id: req.body.id} }).then(function(user) {
-				if (user) {
-					res.json({success: true, message: 'User updated'});
-				} else {
-		        	res.json({success: false, message: 'Failed update'});
-				}
-			});
-		} else {
-			userData.password = app.get('hashPassword')(userData.password);
-			User.findOrCreate({ where: {email: req.body.email}, defaults: userData }).spread(function(user, created) {
-		        if (created) {
-					res.json({success: true, message: 'User created'});
-		        } else {
-		        	res.json({success: false, message: 'Email already exist'});
-		        }
-			});
+		userData.password = app.get('hashPassword')(userData.password);
+		User.findOrCreate({ where: {email: req.body.email}, defaults: userData }).spread(function(user, created) {
+	        if (created) {
+				res.json({success: true, message: 'User created'});
+	        } else {
+	        	res.json({success: false, message: 'Email already exist'});
+	        }
+		});
+	})
+
+	.put('/api/user/:id', function(req, res) {
+		var userData = {
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			email: req.body.email,
+			groups: req.body.groups
+		};
+
+		if (req.body.password) {
+			userData.password = app.get('hashPassword')(req.body.password);
 		}
+		User.update(userData, { where: {id: req.params.id} }).then(function(user) {
+			if (user) {
+				res.json({success: true, message: 'User updated'});
+			} else {
+	        	res.json({success: false, message: 'Failed update'});
+			}
+		});
 	})
 
 	.get('/api/user', function(req, res) {
@@ -167,10 +173,7 @@ app
 					countAll: user.count
 				});
 			} else {
-				res.status(204).json({
-					success: false, 
-					message: 'User not found'
-				});
+				res.status(204).json({ success: false, message: 'User not found' });
 			}
 		});
 	})
@@ -180,34 +183,25 @@ app
 			if (user) {
 				res.json(user);
 			} else {
-				res.status(204).json({
-					success: false, 
-					message: 'User not found'
-				});
+				res.status(204).json({ success: false, message: 'User not found' });
 			}
 		});
 	})
 
 	.delete('/api/user', function(req, res) {
-		if (req.query.id.isArray) {
+		if (req.query.ids.isArray) {
 			paramId = {
-				in: req.query.id
+				in: req.query.ids
 			};
 		} else {
-			paramId = req.query.id;
+			paramId = req.query.ids;
 		}
 
 		User.destroy({ where: { id: paramId } }).then(function(user) {
 			if (user) {
-				res.json({
-					success: true, 
-					message: 'User deleted'
-				});
+				res.json({ success: true, message: 'User deleted' });
 			} else {
-				res.status(204).json({
-					success: false, 
-					message: 'User not found'
-				});
+				res.status(204).json({ success: false, message: 'User not found' });
 			}
 		});
 	})
@@ -218,23 +212,27 @@ app
 			groupName: req.body.groupName,
 		};
 
-		if (req.body.id) {
-			Group.update(groupData, { where: {id: req.body.id} }).then(function(group) {
-				if (group) {
-					res.json({success: true, message: 'Group updated'});
-				} else {
-		        	res.json({success: false, message: 'Failed update'});
-				}
-			});
-		} else {
-			Group.create(groupData).then(function(group) {
-		        if (group) {
-					res.json({success: true, message: 'Group created'});
-		        } else {
-		        	res.json({success: false, message: 'Failed create group'});
-		        }
-			});
-		}
+		Group.create(groupData).then(function(group) {
+	        if (group) {
+				res.json({success: true, message: 'Group created'});
+	        } else {
+	        	res.json({success: false, message: 'Failed create group'});
+	        }
+		});
+	})
+
+	.put('/api/group/:id', function(req, res) {
+		var groupData = {
+			groupName: req.body.groupName,
+		};
+
+		Group.update(groupData, { where: {id: req.params.id} }).then(function(group) {
+			if (group) {
+				res.json({success: true, message: 'Group updated'});
+			} else {
+	        	res.json({success: false, message: 'Failed update'});
+			}
+		}); 
 	})
 
 	.get('/api/group', function(req, res) {
@@ -272,15 +270,9 @@ app
 
 		Group.findAndCountAll(options).then(function(group) {
 			if (group) {
-				res.json({
-					groups: group.rows,
-					countAll: group.count
-				});
+				res.json({ groups: group.rows, countAll: group.count });
 			} else {
-				res.status(204).json({
-					success: false, 
-					message: 'Group not found'
-				});
+				res.status(204).json({ success: false, message: 'Group not found' });
 			}
 		});
 	})
@@ -290,34 +282,25 @@ app
 			if (group) {
 				res.json(group);
 			} else {
-				res.status(204).json({
-					success: false, 
-					message: 'Group not found'
-				});
+				res.status(204).json({ success: false, message: 'Group not found' });
 			}
 		});
 	})
 
 	.delete('/api/group', function(req, res) {
-		if (req.query.id.isArray) {
+		if (req.query.ids.isArray) {
 			paramId = {
-				in: req.query.id
+				in: req.query.ids
 			};
 		} else {
-			paramId = req.query.id;
+			paramId = req.query.ids;
 		}
 
 		Group.destroy({ where: { id: paramId } }).then(function(group) {
 			if (group) {
-				res.json({
-					success: true, 
-					message: 'Group deleted'
-				});
+				res.json({ success: true, message: 'Group deleted' });
 			} else {
-				res.status(204).json({
-					success: false, 
-					message: 'Group not found'
-				});
+				res.status(204).json({ success: false, message: 'Group not found' });
 			}
 		});
 	});
