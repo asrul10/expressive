@@ -59,9 +59,12 @@
         "./dist/css/material-design-iconic-font.min.css",
         "./dist/fonts/*.*"
       ]
+    },
+    "ng-scrollbar": {
+      "main": [
+        "./dist/ng-scrollbar.min.css",
+        "./dist/ng-scrollbar.min.js"
+      ]
     }
-  },
-  "resolutions": {
-    "angular": "^1.4.0"
   }
 }

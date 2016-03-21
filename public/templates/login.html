@@ -1,5 +1,5 @@
-<md-content layout-padding>
-	<md-card ng-init="user.email.length ? alert('hallo') : alert('bad')" class="card-small" style="margin-top: {{top}}px">
+<div layout="row" layout-align="center center" style="height: {{height}}px">
+	<md-card class="card-login">
 		<md-card-title>
 			<md-card-title-text>
 				<a href="/dashboard">
@@ -8,7 +8,7 @@
 				<span class="md-title">Log in to your account</span>
 			</md-card-title-text>
 		</md-card-title>
-		<form ng-submit="doLogin()" class="signin-padding">
+		<form ng-submit="doLogin()" class="form-padding">
 			<md-input-container class="md-block">
 				<label>Email</label>
 				<input ng-model="user.email" ng-disabled="promise" type="email" required>
@@ -45,4 +45,4 @@
 			</md-card-actions>
 		</form>
 	</md-card>
-</md-content>
+</div>

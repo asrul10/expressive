@@ -1,0 +1,88 @@
+/**
+ * Common color
+ */
+$success: #1E88E5;
+$danger: #EF5350;
+$warning: #FFEE58;
+
+/**
+ * Common style
+ */
+a.anchor {
+	color: $success;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+	}
+}
+
+.success {
+	color: $success;
+}
+
+.danger {
+	color: $danger;
+}
+
+.warning {
+	color: $warning;
+}
+
+.form-padding {
+	padding: 10px 16px;
+}
+
+.no-padding {
+	padding: 0;
+}
+
+/**
+ * Social button
+ */
+.md-button:not(.md-icon-button).md-social {
+	text-transform: none;
+	width: 100%;
+	margin: 10px;
+
+	md-icon {
+		padding-left: 7px;
+		padding-right: 7px;
+	}
+
+	&.md-social-google,
+	&.md-social-google:hover,
+	&.md-social-google:focus,
+	&.md-social-google:active,
+	&.md-social-google:visited {
+		background-color: #D32F2F;
+	}
+
+	&.md-social-facebook,
+	&.md-social-facebook:hover,
+	&.md-social-facebook:focus,
+	&.md-social-facebook:active,
+	&.md-social-facebook:visited {
+		background-color: #1976D2;
+	}
+}
+
+/**
+ * Sidenav
+ */
+.exv-sidenav {
+	width: 220px;	
+}
+
+/**
+ * Login page
+ */
+.card-login {
+	width: 450px;
+}
+
+.or-login {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	color: #BDBDBD;
+}

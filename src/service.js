@@ -1,6 +1,31 @@
-var app = angular.module('Service', []);
+/*
+ * Service module
+ */
+(function(window, angular, undefined) {
+'use strict';
 
-app
+angular.module('Service', [])
+	// Initial page
+	.factory('Page', [function () {
+		var title = 'Expressive';
+		var nav = true;
+
+		return {
+			title: function() {
+				return title;
+			},
+			setTitle: function(newTitle) {
+				title = newTitle;
+			},
+			nav: function() {
+				return nav; 
+			},
+			setNav: function(newNav) {
+				nav = newNav;
+			}
+		};
+	}])
+
 	// Auth
 	.factory('Auth', function($resource) {
 		return $resource('/api/auth');
@@ -47,3 +72,4 @@ app
 			});
 		};
 	});
+})(window, angular);

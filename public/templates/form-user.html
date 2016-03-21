@@ -1,4 +1,4 @@
-<md-dialog aria-label="Add" class="form-dialog">
+<md-dialog aria-label="Add" flex="50" flex-sm="80" flex-xs="100">
 	<md-toolbar class="no-shadow">
 	    <div class="md-toolbar-tools">
 	        <h2>{{title}}</h2>
@@ -9,7 +9,7 @@
 	    </div>
 	</md-toolbar>
 	<form name="userForm" ng-submit="save()">
-	    <md-dialog-content class="padding">
+	    <md-dialog-content class="dialog-padding">
 			<md-input-container class="md-block">
 			    <label>First Name*</label>
 			    <input type="text" required name="firstName" ng-model="user.firstName">

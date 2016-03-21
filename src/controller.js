@@ -1,8 +1,19 @@
-var controller = angular.module('Controller', []);
+/*
+ * Controller module
+ */
+(function(window, angular, undefined) {
+'use strict';
 
-// Controller
-controller
-    .controller('NavCtrl', function($scope, $mdSidenav, $cookies, Auth, $window) {
+var appName = 'Expressive :';
+function title(title) {
+    return [appName, title].join(' ');
+}
+
+angular.module('Controller', [])
+    .controller('MainCtrl', function($scope, $mdSidenav, $location, $cookies, $window, Auth, Page) {
+        $scope.Page = Page;
+        $scope.height = $window.innerHeight;
+
         Auth.get(function(res) {
             $scope.loggedin = true;
         }, function(err) {
@@ -10,26 +21,33 @@ controller
         });
 
         $scope.toggleLeft = function() {
-    	    $mdSidenav('left').toggle();
-    	};
-    	$scope.close = function() {
-    		$mdSidenav('left').close();
-    	};
+            $mdSidenav('left').toggle();
+        };
+
+        $scope.close = function() {
+            $mdSidenav('left').close();
+        };
+
         $scope.logout = function() {
             $cookies.remove('token');
-            $window.location.href = '/home';
+            $window.location.href = '/login';
         };
     })
 
-    .controller('DashboardCtrl', function($scope, $location) {
-        // $location.path('/login');
+    .controller('DashboardCtrl', function($scope, $location, $http, Page) {
+        Page.setTitle(title('Dashboard'));
     })
 
-    .controller('LoginCtrl', function($scope, $window, Auth, $cookies, $location) {
+    .controller('LoginCtrl', function($scope, $window, $cookies, $location, Page, Auth) {
+        Page.setTitle(title('Login'));
+        Page.setNav(false);
+
         $scope.loggedin = Auth.get(function(res) {
             $location.path('/home');
         });
         $scope.promise = false;
+        $scope.height = $window.innerHeight;
+        $scope.noNav = true;
 
     	$scope.doLogin = function() {
             $scope.promise = true;
@@ -46,11 +64,11 @@ controller
                 console.log(err);                 
             });
     	};
-        var height = $window.innerHeight;
-        $scope.top = height/14;
     })
 
-    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, User, Group) {
+    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, Page, User, Group) {
+        Page.setTitle(title('Users'));
+
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -239,7 +257,9 @@ controller
         };
     })
 
-    .controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, Group) {
+    .controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, Page, Group) {
+        Page.setTitle(title('Groups'));
+
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -394,3 +414,4 @@ controller
             });
         };
     });
+})(window, angular);

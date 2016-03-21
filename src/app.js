@@ -1,3 +1,9 @@
+/*
+ * App module
+ */
+(function(window, angular, undefined) {
+'use strict';
+
 angular.module('App', [
     "ngRoute", 
     "ngResource",
@@ -5,6 +11,7 @@ angular.module('App', [
     "ngMaterial", 
     "ngMessages", 
     "md.data.table",
+    "Expressive",
     "Service", 
     "Controller"
 ])
@@ -40,12 +47,5 @@ angular.module('App', [
         $mdThemingProvider.theme('default')
             .primaryPalette('blue')
             .accentPalette('pink');
-    })
-
-    // Navigation
-    .directive('sideNav', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'templates/side-nav.html'
-        };
     });
+})(window, angular);

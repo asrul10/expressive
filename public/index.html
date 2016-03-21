@@ -1,29 +1,29 @@
 <!DOCTYPE html>
-<html ng-app="App">
+<html ng-app="App" ng-controller="MainCtrl">
 <head>
-	<title>Expressive</title>
+	<title>{{Page.title()}}</title>
 	<base href="/">
 	<meta content='width=device-width, initial-scale=1, user-scalable=0' name='viewport' />
-	<link rel="stylesheet" type="text/css" href="dist/angular-material/angular-material.min.css">
-	<link rel="stylesheet" type="text/css" href="dist/angular-material-data-table/dist/md-data-table.min.css">
-	<link rel="stylesheet" type="text/css" href="dist/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
-	<link rel="stylesheet" type="text/css" href="style/main.css">
+	<link rel="stylesheet" type="text/css" href="vendor/css/vendor.css">
+	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
-	<div ng-view>
+	<div layout="row" flex ng-if="Page.nav()">
+	    <exv-sidenav></exv-sidenav>
+	    <div layout="column" layout-fill>
+		    <md-content flex layout="column">
+		        <exv-topnav flex layout="row"></exv-topnav>
+		        <md-content layout-padding ng-view class="content">
+					<!-- View Page -->
+		        </md-content>
+			</md-content>
+	    </div>
+	</div>
+    <md-content layout-padding ng-view class="content" ng-if="!Page.nav()">
 		<!-- View Page -->
-    </div>
-
+    </md-content>
 	<!-- Script -->
-	<script src="dist/angular/angular.min.js"></script>
-	<script src="dist/angular-resource/angular-resource.min.js"></script>
-	<script src="dist/angular-route/angular-route.min.js"></script>
-	<script src="dist/angular-aria/angular-aria.min.js"></script>
-	<script src="dist/angular-animate/angular-animate.min.js"></script>
-	<script src="dist/angular-material/angular-material.min.js"></script>
-	<script src="dist/angular-cookies/angular-cookies.min.js"></script>
-	<script src="dist/angular-messages/angular-messages.min.js"></script>
-	<script src="dist/angular-material-data-table/dist/md-data-table.min.js"></script>
-	<script src="src/app.js"></script>
+	<script src="vendor/js/vendor.js"></script>
+	<script src="scripts/app.js"></script>
 </body>
 </html>
