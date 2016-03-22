@@ -8,20 +8,57 @@
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
-	<div layout="row" flex ng-if="Page.nav()">
-	    <exv-sidenav></exv-sidenav>
+	<div layout="row" flex>
+	    <md-sidenav ng-if="Page.nav()" class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop style="min-height: {{height}}px">
+			<md-toolbar class="no-shadow">
+			    <h1 class="md-toolbar-tools">MENU</h1>
+			</md-toolbar>
+			<md-content>
+			    <md-list>
+			        <md-list-item ng-if="!loggedin">
+			            <md-button class="menu-list" href="login" ng-click="close()"> login </md-button>
+			        </md-list-item>
+			        <md-list-item>
+			            <md-button class="menu-list" href="dashboard" ng-click="close()"> dashboard </md-button>
+			        </md-list-item>
+			        <md-list-item ng-if="loggedin">
+			            <md-button class="menu-list" href="users" ng-click="close()"> users </md-button>
+			        </md-list-item>
+			        <md-list-item ng-if="loggedin">
+			            <md-button class="menu-list" href="groups" ng-click="close()"> groups </md-button>
+			        </md-list-item>
+			    </md-list>
+			</md-content>
+		</md-sidenav>
 	    <div layout="column" layout-fill>
 		    <md-content flex layout="column">
-		        <exv-topnav flex layout="row"></exv-topnav>
+		        <nav ng-if="Page.nav()" layout="row" flex>
+					<md-toolbar>
+						<div class="md-toolbar-tools">
+						    <md-button hide-gt-sm class="md-icon-button" aria-label="menu" ng-click="toggleLeft()">
+						        <md-icon md-font-icon="zmdi-menu" class="zmdi zmdi-hc-lg"></md-icon>
+						    </md-button>
+						    <h2><span><a href="home">Expressive</a></span></h2>
+						    <span flex></span>
+						    <md-menu ng-if="loggedin" md-position-mode="target-right target">
+						        <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
+						            <md-icon md-font-icon="zmdi-more-vert" class="zmdi zmdi-hc-lg"></md-icon>
+						        </md-button>
+						        <md-menu-content width="4">
+						            <md-menu-item>
+						                <md-button ng-click="logout()"> Logout </md-button>
+						            </md-menu-item>
+						        </md-menu-content>
+						    </md-menu>
+						</div>
+					</md-toolbar>
+				</nav>
 		        <md-content layout-padding ng-view class="content">
 					<!-- View Page -->
 		        </md-content>
 			</md-content>
 	    </div>
 	</div>
-    <md-content layout-padding ng-view class="content" ng-if="!Page.nav()">
-		<!-- View Page -->
-    </md-content>
 	<!-- Script -->
 	<script src="vendor/js/vendor.js"></script>
 	<script src="scripts/app.js"></script>

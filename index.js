@@ -10,8 +10,8 @@ var crypto = require('crypto');
 
 // Config
 var port = process.env.PORT | 80;
-app.
-	set('superSecret', config.secret)
+app
+	.set('superSecret', config.secret)
 	.set('hashPassword', function(password) {
 		return crypto.createHmac('sha256', app.get('superSecret')).update(password).digest('hex');
 	})
@@ -104,10 +104,12 @@ app
 		userData.password = app.get('hashPassword')(userData.password);
 		User.findOrCreate({ where: {email: req.body.email}, defaults: userData }).spread(function(user, created) {
 	        if (created) {
-				res.json({success: true, message: 'User created'});
+				res.status(201).json({success: true, message: 'User created'});
 	        } else {
 	        	res.json({success: false, message: 'Email already exist'});
 	        }
+		}).catch(function(err) {
+	    	res.status(403).json({success: false, message: err.errors});
 		});
 	})
 
@@ -128,6 +130,8 @@ app
 			} else {
 	        	res.json({success: false, message: 'Failed update'});
 			}
+		}).catch(function(err) {
+	    	res.status(403).json({success: false, message: err.errors});
 		});
 	})
 
@@ -218,6 +222,8 @@ app
 	        } else {
 	        	res.json({success: false, message: 'Failed create group'});
 	        }
+		}).catch(function(err) {
+	    	res.status(403).json({success: false, message: err.errors});
 		});
 	})
 
@@ -232,6 +238,8 @@ app
 			} else {
 	        	res.json({success: false, message: 'Failed update'});
 			}
+		}).catch(function(err) {
+	    	res.status(403).json({success: false, message: err.errors});
 		}); 
 	})
 

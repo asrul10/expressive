@@ -11,7 +11,7 @@ var User = models.user;
 var Group = models.userGroup;
 
 // Sync
-User.sync({ force: true }).then(function() {
+User.sync({ force: true }).then(function(res) {
 	User.create({
 		firstName: 'Asrul',
 		lastName: 'Hanafi',

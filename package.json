@@ -26,6 +26,8 @@
     "jsonwebtoken": "^5.7.0",
     "morgan": "^1.7.0",
     "mysql": "^2.10.2",
-    "sequelize": "^3.19.3"
+    "selfupdate": "^1.1.0",
+    "sequelize": "^3.19.3",
+    "validator": "^5.1.0"
   }
 }

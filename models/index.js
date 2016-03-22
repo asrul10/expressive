@@ -21,7 +21,10 @@ module.exports.user = sequelize.define('user', {
     },
     email: {
     	type: Sequelize.STRING(255),
-    	field: 'email'
+    	field: 'email',
+        validate: {
+            isEmail: true
+        }
     },
     groups: {
         type: Sequelize.TEXT,
@@ -32,7 +35,7 @@ module.exports.user = sequelize.define('user', {
     	field: 'password'
     }
 }, {
-	 freezeTableName: true,
+    freezeTableName: true,
 });
 
 module.exports.userGroup = sequelize.define('user_group', {

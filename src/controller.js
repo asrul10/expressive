@@ -5,8 +5,8 @@
 'use strict';
 
 var appName = 'Expressive :';
-function title(title) {
-    return [appName, title].join(' ');
+function title(subTitle) {
+    return [appName, subTitle].join(' ');
 }
 
 angular.module('Controller', [])
@@ -43,10 +43,10 @@ angular.module('Controller', [])
         Page.setNav(false);
 
         $scope.loggedin = Auth.get(function(res) {
-            $location.path('/home');
+            $location.path('/dashboard');
         });
         $scope.promise = false;
-        $scope.height = $window.innerHeight;
+        $scope.height = $window.innerHeight - 20;
         $scope.noNav = true;
 
     	$scope.doLogin = function() {
@@ -54,7 +54,7 @@ angular.module('Controller', [])
             Auth.save(this.user, function(res) {
                 $cookies.put('token', res.token);
                 if (res.success) {
-                    $window.location.href = '/home';
+                    $window.location.href = '/dashboard';
                 } else {
                     $scope.promise = false;
                     $scope.message = res.message;
