@@ -7,10 +7,15 @@ var jwt = require('jsonwebtoken');
 var models = require('./models');
 var config = require('./config');
 var crypto = require('crypto');
+var ejs = require('ejs');
 
 // Config
 var port = process.env.PORT | 80;
 app
+	.engine('html', ejs.renderFile)
+	.set('views', __dirname + '/public')
+	.set('view engine', 'html')
+	.use(express.static(__dirname + '/public'))
 	.set('superSecret', config.secret)
 	.set('hashPassword', function(password) {
 		return crypto.createHmac('sha256', app.get('superSecret')).update(password).digest('hex');
@@ -29,10 +34,9 @@ var Group = models.userGroup;
 // Route
 app
 	// Client
-	.use(express.static(__dirname + '/public'))
 	.get('*', function(req, res, next) {
 		if (req.url.indexOf('/api/')) {
-			res.sendfile('public/index.html');
+			res.render('index');
 		} else {
 			next();
 		}
