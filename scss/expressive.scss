@@ -4,6 +4,7 @@
 $success: #1E88E5;
 $danger: #EF5350;
 $warning: #FFEE58;
+$color: #5E5E5E;
 
 /**
  * Common style
@@ -84,17 +85,56 @@ a.anchor {
  */
 .exv-topnav {
 	height: 64px;
-	padding: 10px 0;
+	padding: 10px 20px;
 
 	.md-menu {
 	    margin: inherit;
 	}
 
-	.md-button {
+	.md-button:not(.md-icon-button) {
 	    border-radius: 0;
 	    height: 64px;
+	    padding: 0 10px;
+	}
+
+	.md-open {
+		button {
+			background-color: rgba(255, 255, 255, 0.2);
+		}
+	}
+
+	.exv-search-toolbar {
+		color: #fff;
 	}
 }
+
+.exv-search-toolbar {
+    background: transparent;
+    width: 100%;
+    border: none;
+    padding: 0 10px;
+
+    &:focus {
+    	border: none;
+	    outline-color: transparent;
+    }
+}
+
+/**
+ * Avatar
+ */
+.exv-avatar-small {
+    display: inline-block;
+    background-color: #C7C7C7;
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    line-height: 25px;
+    border-radius: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
 
 /**
  * Sidenav
@@ -123,6 +163,10 @@ a.anchor {
 	position: relative; 
 	overflow: hidden;
 	height: 100%;
+}
+
+.ps-container>.ps-scrollbar-y-rail, .ps-container>.ps-scrollbar-y-rail>.ps-scrollbar-y {
+    width: 5px;
 }
 
 #contentScroller {

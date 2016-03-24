@@ -34,6 +34,10 @@ var Group = models.userGroup;
 // Route
 app
 	// Client
+	.get('/login', function(req, res) {
+		res.render('login');
+	})
+
 	.get('*', function(req, res, next) {
 		if (req.url.indexOf('/api/')) {
 			res.render('index');

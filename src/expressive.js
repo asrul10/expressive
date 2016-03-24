@@ -3,18 +3,20 @@
 
 // Custom script
 window.onload = function() {
-    [].forEach.call(document.querySelectorAll('.elm-scroll'), function(el) {
+	var classExvScroll = document.querySelectorAll('.elm-scroll');
+    [].forEach.call(classExvScroll, function(el) {
 		Ps.initialize(el);
     });
 
     var contentScroller = document.getElementById("contentScroller");
-	var scope = angular.element(contentScroller).scope();
-
-    Ps.initialize(contentScroller);
-	scope.$on('$routeChangeStart', function(next, current) { 
-		contentScroller.scrollTop = 0;
-		Ps.update(contentScroller);
-	});
+    if (contentScroller) {
+		var scope = angular.element(contentScroller).scope();
+	    Ps.initialize(contentScroller);
+		scope.$on('$routeChangeStart', function(next, current) { 
+			contentScroller.scrollTop = 0;
+			Ps.update(contentScroller);
+		});
+    }
 };
 
 // Default module

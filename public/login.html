@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="App" ng-controller="MainCtrl">
+<head>
+	<title>{{Page.title()}}</title>
+	<base href="/">
+	<meta content='width=device-width, initial-scale=1, user-scalable=0' name='viewport' />
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/pace/1.0.2/themes/black/pace-theme-minimal.css">
+	<link rel="stylesheet" type="text/css" href="vendor/css/vendor.css">
+	<link rel="stylesheet" type="text/css" href="styles/main.css">
+</head>
+<body>
+    <md-content class="content" layout-padding ng-view></md-content>
+
+	<!-- Script -->
+	<script src="vendor/js/vendor.js"></script>
+	<script src="scripts/app.js"></script>
+</body>
+</html>

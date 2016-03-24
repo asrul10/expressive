@@ -8,7 +8,6 @@ angular.module('Service', [])
 	// Initial page
 	.factory('Page', [function () {
 		var title = 'Expressive';
-		var nav = true;
 
 		return {
 			title: function() {
@@ -16,12 +15,6 @@ angular.module('Service', [])
 			},
 			setTitle: function(newTitle) {
 				title = newTitle;
-			},
-			nav: function() {
-				return nav; 
-			},
-			setNav: function(newNav) {
-				nav = newNav;
 			}
 		};
 	}])

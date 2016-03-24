@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div layout="row" flex>
-	    <md-sidenav ng-if="Page.nav()" class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop style="min-height: {{height}}px">
+	    <md-sidenav class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop style="min-height: {{height}}px">
 			<md-toolbar class="exv-topnav" md-whiteframe="1">
 			    <h1 class="md-toolbar-tools">MENU</h1>
 			</md-toolbar>
@@ -33,25 +33,20 @@
 		</md-sidenav>
 	    <div layout="column" layout-fill>
 		    <md-content flex layout="column">
-		        <nav ng-if="Page.nav()" layout="row" flex>
+		        <nav layout="row" flex>
 					<md-toolbar class="exv-topnav" md-whiteframe="1">
-						<div class="md-toolbar-tools">
+						<div class="md-toolbar-tools" ng-hide="searchToolbar">
 						    <md-button hide-gt-sm class="md-icon-button" aria-label="menu" ng-click="toggleLeft()">
 						        <md-icon md-font-icon="zmdi-menu" class="zmdi zmdi-hc-lg"></md-icon>
 						    </md-button>
 						    <h2><span><a href="home">Expressive</a></span></h2>
 						    <span flex></span>
-							<md-menu md-offset="0 72">
-    					    	<md-button aria-label="user" class="exv-topnav-btn" ng-click="$mdOpenMenu()">
+							<md-menu md-offset="0 72" md-position-mode="target-right target">
+    					    	<md-button aria-label="user" ng-click="$mdOpenMenu()">
+    					    		<div class="exv-avatar-small"><md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-2x"></md-icon></div>
 							    	User
 							    </md-button>
-							    <md-menu-content>
-							        <md-menu-item>
-							            <md-button>Do Something</md-button>
-							        </md-menu-item>
-							        <md-menu-item>
-							            <md-button>Do Something</md-button>
-							        </md-menu-item>
+							    <md-menu-content width="4">
 							        <md-menu-item>
 							            <md-button>Do Something</md-button>
 							        </md-menu-item>
@@ -60,6 +55,16 @@
 						            </md-menu-item>
 							    </md-menu-content>
 							</md-menu>
+							<md-button class="md-icon-button" ng-click="searchToolbar = true" aria-label="search">
+								<md-icon class="zmdi zmdi-hc-lg" md-font-icon="zmdi-search"></md-icon>
+							</md-button>
+						</div>
+						<div class="md-toolbar-tools" ng-show="searchToolbar">
+				            <input class="exv-search-toolbar" ng-model="searchVal" type="text">
+						    <span flex></span>
+							<md-button class="md-icon-button" ng-click="searchToolbar = false; searchVal = ''" aria-label="search">
+								<md-icon class="zmdi zmdi-hc-lg" md-font-icon="zmdi-close"></md-icon>
+							</md-button>
 						</div>
 					</md-toolbar>
 				</nav>

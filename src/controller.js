@@ -40,13 +40,11 @@ angular.module('Controller', [])
 
     .controller('LoginCtrl', function($scope, $window, $cookies, $location, Page, Auth) {
         Page.setTitle(title('Login'));
-        Page.setNav(false);
 
         $scope.loggedin = Auth.get(function(res) {
             $location.path('/dashboard');
         });
         $scope.promise = false;
-        $scope.height = $window.innerHeight - 20;
         $scope.noNav = true;
 
     	$scope.doLogin = function() {
