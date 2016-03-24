@@ -11,7 +11,7 @@ var autoprefixer = require('gulp-autoprefixer');
 var mainBowerFiles = require('gulp-main-bower-files');
 
 // Sripts
-gulp.task('script', function() {
+gulp.task('scripts', function() {
 	return gulp.src('src/**/*.js')
 		.pipe(plumber())
         .pipe(concat('app.js'))
@@ -39,10 +39,12 @@ gulp.task('bower', function() {
         .pipe(mainBowerFiles())
         .pipe(filterJS)
         .pipe(concat('vendor.js'))
+        .pipe(uglify({ mangle: false }))
         .pipe(gulp.dest('public/vendor/js'))
         .pipe(filterJS.restore)
         .pipe(filterCSS)
         .pipe(concat('vendor.css'))
+        .pipe(csso())
         .pipe(gulp.dest('public/vendor/css'))
         .pipe(filterCSS.restore)
         .pipe(filterFonts)
@@ -52,8 +54,8 @@ gulp.task('bower', function() {
 
 // Watch
 gulp.task('watch', function() {
-    gulp.watch(['style/**/*.scss'], ['sass']);
-	gulp.watch(['src/**/*.js'], ['script']);
+    gulp.watch(['scss/**/*.scss'], ['sass']);
+	gulp.watch(['src/**/*.js'], ['scripts']);
 });
 
 // Default

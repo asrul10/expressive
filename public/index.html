@@ -4,13 +4,14 @@
 	<title>{{Page.title()}}</title>
 	<base href="/">
 	<meta content='width=device-width, initial-scale=1, user-scalable=0' name='viewport' />
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/pace/1.0.2/themes/black/pace-theme-minimal.css">
 	<link rel="stylesheet" type="text/css" href="vendor/css/vendor.css">
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
 	<div layout="row" flex>
 	    <md-sidenav ng-if="Page.nav()" class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop style="min-height: {{height}}px">
-			<md-toolbar class="no-shadow">
+			<md-toolbar class="exv-topnav" md-whiteframe="1">
 			    <h1 class="md-toolbar-tools">MENU</h1>
 			</md-toolbar>
 			<md-content>
@@ -33,29 +34,38 @@
 	    <div layout="column" layout-fill>
 		    <md-content flex layout="column">
 		        <nav ng-if="Page.nav()" layout="row" flex>
-					<md-toolbar>
+					<md-toolbar class="exv-topnav" md-whiteframe="1">
 						<div class="md-toolbar-tools">
 						    <md-button hide-gt-sm class="md-icon-button" aria-label="menu" ng-click="toggleLeft()">
 						        <md-icon md-font-icon="zmdi-menu" class="zmdi zmdi-hc-lg"></md-icon>
 						    </md-button>
 						    <h2><span><a href="home">Expressive</a></span></h2>
 						    <span flex></span>
-						    <md-menu ng-if="loggedin" md-position-mode="target-right target">
-						        <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu($event)">
-						            <md-icon md-font-icon="zmdi-more-vert" class="zmdi zmdi-hc-lg"></md-icon>
-						        </md-button>
-						        <md-menu-content width="4">
-						            <md-menu-item>
+							<md-menu md-offset="0 72">
+    					    	<md-button aria-label="user" class="exv-topnav-btn" ng-click="$mdOpenMenu()">
+							    	User
+							    </md-button>
+							    <md-menu-content>
+							        <md-menu-item>
+							            <md-button>Do Something</md-button>
+							        </md-menu-item>
+							        <md-menu-item>
+							            <md-button>Do Something</md-button>
+							        </md-menu-item>
+							        <md-menu-item>
+							            <md-button>Do Something</md-button>
+							        </md-menu-item>
+							        <md-menu-item>
 						                <md-button ng-click="logout()"> Logout </md-button>
 						            </md-menu-item>
-						        </md-menu-content>
-						    </md-menu>
+							    </md-menu-content>
+							</md-menu>
 						</div>
 					</md-toolbar>
 				</nav>
-		        <md-content layout-padding ng-view class="content">
-					<!-- View Page -->
-		        </md-content>
+				<div class="content" style="height: {{height - 80}}px" id="contentScroller">
+			        <md-content class="content" layout-padding ng-view></md-content>
+		        </div>
 			</md-content>
 	    </div>
 	</div>

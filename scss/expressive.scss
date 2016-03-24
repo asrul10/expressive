@@ -37,6 +37,18 @@ a.anchor {
 	padding: 0;
 }
 
+.spanner {
+	width: 10px;
+	height: 10px;
+}
+
+.scroller {
+    white-space: pre-line;
+    height: 500px;
+    overflow-y: hidden;
+    position: relative;
+}
+
 /**
  * Social button
  */
@@ -68,6 +80,23 @@ a.anchor {
 }
 
 /**
+ * Topnav
+ */
+.exv-topnav {
+	height: 64px;
+	padding: 10px 0;
+
+	.md-menu {
+	    margin: inherit;
+	}
+
+	.md-button {
+	    border-radius: 0;
+	    height: 64px;
+	}
+}
+
+/**
  * Sidenav
  */
 .exv-sidenav {
@@ -85,4 +114,19 @@ a.anchor {
 	margin-top: 20px;
 	margin-bottom: 20px;
 	color: #BDBDBD;
+}
+
+/**
+ * Perfect scrollbar
+ */
+.elm-scroll {
+	position: relative; 
+	overflow: hidden;
+	height: 100%;
+}
+
+#contentScroller {
+	position: relative;
+	overflow: hidden;
+	height: 100%;
 }

@@ -18,53 +18,8 @@
     "angular-cookies": "^1.5.2",
     "angular-material-data-table": "^0.9.12",
     "material-design-iconic-font": "^2.2.0",
-    "angular-resource": "^1.5.2"
-  },
-  "overrides": {
-    "angular": {
-      "main": "./angular.min.js"
-    },
-    "angular-resource": {
-      "main": "./angular-resource.min.js"
-    },
-    "angular-material": {
-      "main": [
-        "./angular-material.min.css",
-        "./angular-material.min.js"
-      ]
-    },
-    "angular-route": {
-      "main": "./angular-route.min.js"
-    },
-    "angular-aria": {
-      "main": "./angular-aria.min.js"
-    },
-    "angular-messages": {
-      "main": "./angular-messages.min.js"
-    },
-    "angular-animate": {
-      "main": "./angular-animate.min.js"
-    },
-    "angular-cookies": {
-      "main": "./angular-cookies.min.js"
-    },
-    "angular-material-data-table": {
-      "main": [
-        "./dist/md-data-table.min.css",
-        "./dist/md-data-table.min.js"
-      ]
-    },
-    "material-design-iconic-font": {
-      "main": [
-        "./dist/css/material-design-iconic-font.min.css",
-        "./dist/fonts/*.*"
-      ]
-    },
-    "ng-scrollbar": {
-      "main": [
-        "./dist/ng-scrollbar.min.css",
-        "./dist/ng-scrollbar.min.js"
-      ]
-    }
+    "angular-resource": "^1.5.2",
+    "PACE": "pace#^1.0.2",
+    "perfect-scrollbar": "^0.6.10"
   }
 }
