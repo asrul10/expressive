@@ -10,10 +10,9 @@ function title(subTitle) {
 }
 
 angular.module('Controller', [])
-    .controller('MainCtrl', function($scope, $mdSidenav, $location, $cookies, $window, Auth, Page) {
-        $scope.Page = Page;
+    .controller('MainCtrl', function($scope, $mdSidenav, $location, $cookies, $window, Auth) {
         $scope.height = $window.innerHeight;
-
+        
         Auth.get(function(res) {
             $scope.loggedin = true;
         }, function(err) {
@@ -34,16 +33,11 @@ angular.module('Controller', [])
         };
     })
 
-    .controller('DashboardCtrl', function($scope, $location, $http, Page) {
-        Page.setTitle(title('Dashboard'));
+    .controller('DashboardCtrl', function($scope, $location, $http) {
+        // Page.setTitle(title('Dashboard'));
     })
 
-    .controller('LoginCtrl', function($scope, $window, $cookies, $location, Page, Auth) {
-        Page.setTitle(title('Login'));
-
-        $scope.loggedin = Auth.get(function(res) {
-            $location.path('/dashboard');
-        });
+    .controller('LoginCtrl', function($scope, $window, $cookies, $location, Auth) {
         $scope.promise = false;
         $scope.noNav = true;
 
@@ -64,9 +58,7 @@ angular.module('Controller', [])
     	};
     })
 
-    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, Page, User, Group) {
-        Page.setTitle(title('Users'));
-
+    .controller('UsersCtrl', function($scope, $location, $q, $mdDialog, User, Group) {
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -255,9 +247,7 @@ angular.module('Controller', [])
         };
     })
 
-    .controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, Page, Group) {
-        Page.setTitle(title('Groups'));
-
+    .controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, Group) {
         $scope.pagination = {
             page: 1,
             limit: 5

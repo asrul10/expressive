@@ -5,20 +5,6 @@
 'use strict';
 
 angular.module('Service', [])
-	// Initial page
-	.factory('Page', [function () {
-		var title = 'Expressive';
-
-		return {
-			title: function() {
-				return title;
-			},
-			setTitle: function(newTitle) {
-				title = newTitle;
-			}
-		};
-	}])
-
 	// Auth
 	.factory('Auth', function($resource) {
 		return $resource('/api/auth');

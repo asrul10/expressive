@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="App" ng-controller="MainCtrl">
 <head>
-	<title>{{Page.title()}}</title>
+	<title>Expressive</title>
 	<base href="/">
 	<meta content='width=device-width, initial-scale=1, user-scalable=0' name='viewport' />
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/pace/1.0.2/themes/black/pace-theme-minimal.css">
@@ -9,7 +9,9 @@
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
-    <md-content class="content" layout-padding ng-view></md-content>
+	<exv-scroll>
+	    <md-content class="content" layout-padding ng-view></md-content>
+    </exv-scroll>
 
 	<!-- Script -->
 	<script src="vendor/js/vendor.js"></script>

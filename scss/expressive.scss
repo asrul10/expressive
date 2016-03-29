@@ -5,6 +5,7 @@ $success: #1E88E5;
 $danger: #EF5350;
 $warning: #FFEE58;
 $color: #5E5E5E;
+$dark: #202020;
 
 /**
  * Common style
@@ -140,7 +141,13 @@ a.anchor {
  * Sidenav
  */
 .exv-sidenav {
-	width: 220px;	
+	width: 220px;
+	background-color: $dark;
+	
+	md-content {
+		background-color: $dark;
+		color: #fff;
+	}
 }
 
 /**

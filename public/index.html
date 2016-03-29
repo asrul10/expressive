@@ -1,35 +1,36 @@
 <!DOCTYPE html>
 <html ng-app="App" ng-controller="MainCtrl">
 <head>
-	<title>{{Page.title()}}</title>
+	<title>Expressive</title>
 	<base href="/">
 	<meta content='width=device-width, initial-scale=1, user-scalable=0' name='viewport' />
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/pace/1.0.2/themes/black/pace-theme-minimal.css">
 	<link rel="stylesheet" type="text/css" href="vendor/css/vendor.css">
 	<link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
 <body>
 	<div layout="row" flex>
-	    <md-sidenav class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop style="min-height: {{height}}px">
+	    <md-sidenav class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop>
 			<md-toolbar class="exv-topnav" md-whiteframe="1">
 			    <h1 class="md-toolbar-tools">MENU</h1>
 			</md-toolbar>
-			<md-content>
-			    <md-list>
-			        <md-list-item ng-if="!loggedin">
-			            <md-button class="menu-list" href="login" ng-click="close()"> login </md-button>
-			        </md-list-item>
-			        <md-list-item>
-			            <md-button class="menu-list" href="dashboard" ng-click="close()"> dashboard </md-button>
-			        </md-list-item>
-			        <md-list-item ng-if="loggedin">
-			            <md-button class="menu-list" href="users" ng-click="close()"> users </md-button>
-			        </md-list-item>
-			        <md-list-item ng-if="loggedin">
-			            <md-button class="menu-list" href="groups" ng-click="close()"> groups </md-button>
-			        </md-list-item>
-			    </md-list>
-			</md-content>
+			<exv-scroll exv-full-height="-64">
+				<md-content>
+				    <md-list>
+				        <md-list-item ng-if="!loggedin">
+				            <md-button class="menu-list" href="login" ng-click="close()" target="_self"> login </md-button>
+				        </md-list-item>
+				        <md-list-item>
+				            <md-button class="menu-list" href="dashboard" ng-click="close()"> dashboard </md-button>
+				        </md-list-item>
+				        <md-list-item ng-if="loggedin">
+				            <md-button class="menu-list" href="users" ng-click="close()"> users </md-button>
+				        </md-list-item>
+				        <md-list-item ng-if="loggedin">
+				            <md-button class="menu-list" href="groups" ng-click="close()"> groups </md-button>
+				        </md-list-item>
+				    </md-list>
+				</md-content>
+			</exv-scroll>
 		</md-sidenav>
 	    <div layout="column" layout-fill>
 		    <md-content flex layout="column">
@@ -41,7 +42,7 @@
 						    </md-button>
 						    <h2><span><a href="home">Expressive</a></span></h2>
 						    <span flex></span>
-							<md-menu md-offset="0 72" md-position-mode="target-right target">
+							<md-menu md-offset="0 72" md-position-mode="target-right target" ng-if="loggedin">
     					    	<md-button aria-label="user" ng-click="$mdOpenMenu()">
     					    		<div class="exv-avatar-small"><md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-2x"></md-icon></div>
 							    	User
@@ -68,7 +69,7 @@
 						</div>
 					</md-toolbar>
 				</nav>
-				<div class="content" style="height: {{height - 80}}px" id="contentScroller">
+				<div class="content" exv-full-height="-80" id="contentScroller">
 			        <md-content class="content" layout-padding ng-view></md-content>
 		        </div>
 			</md-content>

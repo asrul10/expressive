@@ -20,18 +20,22 @@ angular.module('App', [
     .config(function($routeProvider, $locationProvider) {
         $routeProvider
             .when('/dashboard', {
+                title : 'Expressive : Dashboard',
                 templateUrl: '/templates/dashboard.html',
                 controller: 'DashboardCtrl'
             })
         	.when('/login', {
+                title : 'Expressive : Login',
         		templateUrl: "/templates/login.html",
         		controller: "LoginCtrl"
         	})
             .when('/users', {
+                title : 'Expressive : Users',
                 templateUrl: '/templates/users.html',
                 controller: 'UsersCtrl'
             })
             .when('/groups', {
+                title : 'Expressive : Groups',
                 templateUrl: '/templates/groups.html',
                 controller: 'GroupsCtrl'
             })
