@@ -59,4 +59,4 @@ gulp.task('watch', function() {
 });
 
 // Default
-gulp.task('default', ['bower', 'sass', 'script']);
+gulp.task('default', ['bower', 'sass', 'scripts']);
