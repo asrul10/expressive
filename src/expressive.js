@@ -17,23 +17,57 @@
         Ps.update(contentScroller);
       });
     }
+
+    var menuListItem = document.getElementsByClassName('menu-list');
+    var eleListItem = angular.element(menuListItem);
+    [].forEach.call(eleListItem, function(el) {
+      if (angular.element(el).parent().find('exv-sidenav-child').length) {
+        angular.element(el).append('<i class="zmdi zmdi-chevron-down zmdi-hc-lg exv-arrow-menu"></i>');
+      }
+    });
   };
 
   angular.module('Expressive', [])
     /**
-     * Set title
+     * Initialize Page
      */
     .run(function($rootScope, $route) {
       $rootScope.$on('$routeChangeSuccess', function() {
+        var currPath = window.location.pathname.replace('#', '');
+        var menuList = document.getElementsByClassName('menu-list');
+
         if (typeof($route.current.title) !== 'undefined') {
           document.title = $route.current.title;
         }
+
+        [].forEach.call(menuList, function(el) {
+          if (typeof(angular.element(el).attr('href')) !== 'undefined') {
+            var href = angular.element(el).attr('href').replace('#', '');
+            if (currPath === href) {
+              angular.element(el).addClass('active');
+              angular.element(el).parent('exv-sidenav-item')
+                .parent().parent()
+                .parent().parent()
+                .parent().addClass('collapsed');
+            } else {
+              angular.element(el).removeClass('active');
+            }
+          }
+        });
       });
     })
 
 	  /**
 	   * Sidenav
 	   */
+    .directive('exvSidenavTitle', function() {
+      return {
+        restrict: 'E',
+        transclude: true,
+        template: '<div class="exv-sidenav-title" ng-transclude></div>'
+      };
+    })
+
 	  .directive('exvSidenavParent', function() {
 	    return {
 	      restrict: 'E',

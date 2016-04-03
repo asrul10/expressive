@@ -3,15 +3,13 @@
 		<img src="./images/expressive.png" class="logo-small" alt="expressive">
 	</a>
 	<md-card class="card-login">
-		<md-card-title>
-			<md-card-title-text>
-				<span class="md-title">Log in to your account</span>
-			</md-card-title-text>
-		</md-card-title>
+		<md-toolbar>
+			<h1 class="md-toolbar-tools">Login</h1>
+		</md-toolbar>
 		<form ng-submit="doLogin()" class="form-padding">
 			<md-input-container class="md-block">
 				<label>Email</label>
-				<input ng-model="user.email" ng-disabled="promise" type="email" required>
+				<input ng-model="user.email" ng-disabled="promise" type="email" autofocus required>
 			</md-input-container>
 			<md-input-container class="md-block">
 				<label>Password</label>
@@ -19,15 +17,15 @@
 			</md-input-container>
 			<p ng-if="message" class="danger">{{message}}</p>
 			<div layout="row">
-				<a class="anchor" href="#" title="Forgot Passowrd?">Forgot Password?</a>
-				<span flex></span>
 				<md-checkbox ng-model="user.remember" aria-label="Remember me">
 					Remember Me
 				</md-checkbox>
+				<span flex></span>
+				<!-- <a class="anchor" href="#" title="Forgot Passowrd?">Forgot Password?</a> -->
 			</div>
 			<md-card-actions>
-				<div layout="row" layout-align="center center">
-					<md-button type="submit" flex="33" ng-disabled="promise || !user.email || !user.password" class="md-raised md-primary">Log in</md-button>
+				<div layout="row">
+					<md-button type="submit" flex ng-disabled="promise || !user.email || !user.password" class="md-raised md-primary">Login</md-button>
 				</div>
 				<div layout="row" class="or-login" layout-align="center center">
 					OR
@@ -35,15 +33,15 @@
 				<div layout-gt-xs="row" layout-align="center center">
 					<div flex>
 						<md-button class="md-raised md-primary md-social md-social-google">
-			                <md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
-							<span>Log in with Google</span>
+							<md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
+							<span>Login with Google</span>
 						</md-button>
 					</div>
 					<div class="spanner"></div>
 					<div flex>
 						<md-button class="md-raised md-primary md-social md-social-facebook">
-			                <md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
-							<span>Log in with Facebook</span>
+							<md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
+							<span>Login with Facebook</span>
 						</md-button>
 					</div>
 				</div>

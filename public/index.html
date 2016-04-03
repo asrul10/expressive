@@ -11,18 +11,25 @@
 
 <body>
 	<div layout="row" flex>
-		<md-sidenav class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop>
-			<md-toolbar class="exv-topnav" md-whiteframe="1">
-				<h1 class="md-toolbar-tools">MENU</h1>
+		<md-sidenav class="md-sidenav-left exv-sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" md-disable-backdrop md-whiteframe="2">
+			<md-toolbar hide-sm hide-xs class="exv-topnav" md-whiteframe="2">
+				<h1 class="md-toolbar-tools">Expressive</h1>
 			</md-toolbar>
 			<exv-scroll exv-full-height="-64">
 				<md-content>
+					<exv-sidenav-title>Main Menu</exv-sidenav-title>
 					<exv-sidenav-parent>
 						<exv-sidenav-item>
-							<md-button class="menu-list" href="/#dashboard" ng-click="close()">dashboard</md-button>
+							<md-button class="menu-list" href="/#dashboard" ng-click="close()">
+								<md-icon md-font-icon="zmdi-view-dashboard" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+								dashboard
+							</md-button>
 						</exv-sidenav-item>
 						<exv-sidenav-item ng-if="loggedin">
-							<md-button class="menu-list">Account</md-button>
+							<md-button class="menu-list">
+								<md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+								Account
+							</md-button>
 							<exv-sidenav-child>
 								<exv-sidenav-item>
 									<md-button class="menu-list" href="/#users" ng-click="close()">users</md-button>
@@ -39,12 +46,11 @@
 		<div layout="column" layout-fill>
 			<md-content flex layout="column">
 				<nav layout="row" flex>
-					<md-toolbar class="exv-topnav" md-whiteframe="1">
+					<md-toolbar class="exv-topnav" md-whiteframe="2">
 						<div class="md-toolbar-tools" ng-hide="searchToolbar">
 							<md-button hide-gt-sm class="md-icon-button" aria-label="menu" ng-click="toggleLeft()">
 								<md-icon md-font-icon="zmdi-menu" class="zmdi zmdi-hc-lg"></md-icon>
 							</md-button>
-							<h2><span><a href="home">Expressive</a></span></h2>
 							<span flex></span>
 							<md-button aria-label="login" href="login" target="_self" ng-if="!loggedin">Login</md-button>
 							<md-menu md-offset="0 72" md-position-mode="target-right target" ng-if="loggedin">
@@ -56,19 +62,19 @@
 								</md-button>
 								<md-menu-content width="4">
 									<md-menu-item>
-										<md-button>Do Something</md-button>
+										<md-button href="/#dashboard">Dashboard</md-button>
 									</md-menu-item>
 									<md-menu-item>
 										<md-button ng-click="logout()"> Logout </md-button>
 									</md-menu-item>
 								</md-menu-content>
 							</md-menu>
-							<md-button class="md-icon-button" ng-click="searchToolbar = true" aria-label="search">
+							<md-button class="md-icon-button" ng-click="searchButton()" aria-label="search">
 								<md-icon class="zmdi zmdi-hc-lg" md-font-icon="zmdi-search"></md-icon>
 							</md-button>
 						</div>
 						<div class="md-toolbar-tools" ng-show="searchToolbar">
-							<input class="exv-search-toolbar" ng-model="searchVal" type="text">
+							<input class="exv-search-toolbar" id="searchToolbarFocus" ng-model="searchVal" type="text">
 							<span flex></span>
 							<md-button class="md-icon-button" ng-click="searchToolbar = false; searchVal = ''" aria-label="search">
 								<md-icon class="zmdi zmdi-hc-lg" md-font-icon="zmdi-close"></md-icon>

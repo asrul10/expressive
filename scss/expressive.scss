@@ -123,13 +123,30 @@ a.anchor {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 10px 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 50px;
   margin: 0;
   border-radius: 0;
+  position: relative;
+  .exv-menu-icon {
+    color: #fff;
+    line-height: 36px;
+    left: 20px;
+    position: absolute;
+  }
 }
 .exv-sidenav {
-  width: 220px;
+  width: 270px;
   background-color: $dark0;
+  .exv-sidenav-title {
+    padding: 15px 20px;
+    color: #8E8E8E;
+  }
+  .exv-topnav {
+    background-color: $dark0;
+  }
   md-content {
     background-color: $dark0;
     color: #fff;
@@ -140,7 +157,7 @@ a.anchor {
     .md-button:not([disabled]).active:hover,
     .md-button:not([disabled]).active:focus,
     .md-button:not([disabled]).active:visited {
-      background-color: $success;
+      background-color: rgb(33,150,243);
     }
   }
 }
@@ -151,7 +168,10 @@ a.anchor {
     background-color: $dark1;
     .exv-sidenav-child {
       max-height: 500px;
-      transition: all 1s ease;
+      transition: max-height 1s ease;
+    }
+    .exv-arrow-menu {
+      transform: rotate(-180deg);
     }
   }
 }
@@ -161,17 +181,26 @@ a.anchor {
   padding: 0;
   overflow: hidden;
   max-height: 0;
-  transition: all 0.2s ease;
+  transition: max-height 0.2s ease;
+}
+.exv-arrow-menu {
+  float: right;
+  line-height: 36px;
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
 }
 /**
  * Login page
  */
 .card-login {
   width: 450px;
+  .md-button {
+    height: 45px;
+  }
 }
 .or-login {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   color: #BDBDBD;
 }
 /**

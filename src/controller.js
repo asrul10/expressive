@@ -5,28 +5,7 @@
   'use strict';
 
   angular.module('Controller', [])
-    .run(function($rootScope, $route) {
-      $rootScope.$on('$routeChangeSuccess', function() {
-        var currPath = window.location.pathname.replace('#', '');
-        var menuList = document.getElementsByClassName('menu-list');
-        [].forEach.call(menuList, function(el) {
-          if (typeof(angular.element(el).attr('href')) !== 'undefined') {
-            var href = angular.element(el).attr('href').replace('#', '');
-            if (currPath === href) {
-              angular.element(el).addClass('active');
-              angular.element(el).parent('exv-sidenav-item')
-                .parent().parent()
-                .parent().parent()
-                .parent().addClass('collapsed');
-            } else {
-              angular.element(el).removeClass('active');
-            }
-          }
-        });
-      });
-    })
-
-    .controller('MainCtrl', function($scope, $mdSidenav, $location, $cookies, $window, Auth) {
+    .controller('MainCtrl', function($scope, $mdSidenav, $location, $cookies, $window, $timeout, Auth) {
       $scope.height = $window.innerHeight;
 
       Auth.get(function(res) {
@@ -34,6 +13,13 @@
       }, function(err) {
         $scope.loggedin = false;
       });
+
+      $scope.searchButton =  function() {
+        $scope.searchToolbar = true;
+        $timeout(function() {
+          document.getElementById('searchToolbarFocus').focus();
+        }, 100);
+      };
 
       $scope.toggleLeft = function() {
         $mdSidenav('left').toggle();
