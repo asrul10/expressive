@@ -1,13 +1,12 @@
 {
-  "name": "Expressive",
+  "name": "expressive",
   "version": "0.5.0",
   "description": "Expressive starter projects pack",
   "main": "index.js",
   "authors": [
     "Asrul Hanafi <hanafi.asrul@gmail.com>"
   ],
-  "license": "ISC",
-  "private": true,
+  "license": "MIT",
   "dependencies": {
     "angular-material": "~1.0.6",
     "angular-route": "^1.5.3",

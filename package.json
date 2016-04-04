@@ -1,11 +1,10 @@
 {
-  "name": "Expressisve",
+  "name": "expressisve",
   "version": "0.5.0",
   "description": "Expressive starter projects pack",
   "main": "index.js",
   "author": "Asrul Hanafi <hanafi.asrul@gmail.com>",
-  "license": "ISC",
-  "private": true,
+  "license": "MIT",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
