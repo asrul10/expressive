@@ -9,11 +9,6 @@ Custom M-EAN starter Mysql, Express, Angular, Nodejs with theme Angular Material
 ## Installation
 Install `gulp-cli`, `nodemon` globally
 
-Create directory
-```
-  $ mkdir expressive && cd expressive
-```
-
 Clone expressive
 ```
   $ git clone https://github.com/asrul10/expressive.git
