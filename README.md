@@ -7,7 +7,7 @@ Custom M-EAN starter Mysql, Express, Angular, Nodejs with theme Angular Material
 [![Dev-Dependency Status](https://img.shields.io/david/dev/asrul10/expressive.svg)](https://github.com/asrul10/expressive)
 
 ## Installation
-Install `gulp-cli`, `nodemon` globally
+Install `gulp-cli`, `nodemon`, and `bower` globally
 
 Clone expressive
 ```
