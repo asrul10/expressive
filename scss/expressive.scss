@@ -208,15 +208,10 @@ a.anchor {
  */
 .elm-scroll {
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   height: 100%;
 }
 .ps-container > .ps-scrollbar-y-rail,
 .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
   width: 5px;
-}
-#contentScroller {
-  position: relative;
-  overflow: hidden;
-  height: 100%;
 }
