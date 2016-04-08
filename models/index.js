@@ -3,9 +3,9 @@ var Sequelize = require('sequelize');
 
 // initialize database connection
 var sequelize = new Sequelize(
-    config.database.database, 
-    config.database.user, 
-    config.database.password, 
+    config.database.database,
+    config.database.user,
+    config.database.password,
     config.database.server
 );
 
@@ -20,8 +20,8 @@ module.exports.user = sequelize.define('user', {
         field: 'last_name'
     },
     email: {
-    	type: Sequelize.STRING(255),
-    	field: 'email',
+        type: Sequelize.STRING(255),
+        field: 'email',
         validate: {
             isEmail: true
         }
@@ -31,15 +31,15 @@ module.exports.user = sequelize.define('user', {
         field: 'groups'
     },
     password: {
-    	type: Sequelize.TEXT,
-    	field: 'password'
+        type: Sequelize.TEXT,
+        field: 'password'
     }
 }, {
     freezeTableName: true,
 });
 
 module.exports.userGroup = sequelize.define('user_group', {
-    groupName : {
+    groupName: {
         type: Sequelize.STRING,
         field: 'group_name'
     }
