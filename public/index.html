@@ -7,7 +7,7 @@
         <meta content="width=device-width, initial-scale=1, user-scalable=0" name="viewport"/>
         <!-- inject:css -->
 		<link rel="stylesheet" href="vendor/css/vendor-f04653dc4d.css">
-		<link rel="stylesheet" href="styles/main-dd88b397f2.css">
+		<link rel="stylesheet" href="styles/main-fed3cab38e.css">
 		<!-- endinject -->
     </head>
 
@@ -27,9 +27,15 @@
                                     dashboard
                                 </md-button>
                             </exv-sidenav-item>
-                            <exv-sidenav-item ng-if="loggedin">
+                            <exv-sidenav-item>
+                                <md-button class="menu-list" href="/#sandbox" ng-click="close()">
+                                    <md-icon md-font-icon="zmdi-layers" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+                                    Sandbox
+                                </md-button>
+                            </exv-sidenav-item>
+                            <exv-sidenav-item ng-if="loggedin && admin">
                                 <md-button class="menu-list">
-                                    <md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+                                    <md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
                                     Account
                                 </md-button>
                                 <exv-sidenav-child>
@@ -54,21 +60,18 @@
                                     <md-icon md-font-icon="zmdi-menu" class="zmdi zmdi-hc-lg"></md-icon>
                                 </md-button>
                                 <span flex></span>
-                                <md-button aria-label="login" href="login" target="_self" ng-if="!loggedin">Login</md-button>
+                                <md-button aria-label="login" href="/signin" target="_self" ng-if="!loggedin">Sign in</md-button>
                                 <md-menu md-offset="0 72" md-position-mode="target-right target" ng-if="loggedin">
                                     <md-button aria-label="user" ng-click="$mdOpenMenu()">
                                         <div class="exv-avatar-small">
                                             <md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-2x"></md-icon>
                                         </div>
-                                        User
+                                        {{username}}
                                     </md-button>
                                     <md-menu-content width="4">
                                         <md-menu-item>
-                                            <md-button href="/#dashboard" ng-click="close()">Dashboard</md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
                                             <md-button ng-click="logout()">
-                                                Logout
+                                                Sign out
                                             </md-button>
                                         </md-menu-item>
                                     </md-menu-content>
@@ -94,7 +97,7 @@
         </div>
         <!-- inject:js -->
 		<script src="vendor/js/vendor-80d9f6ab94.js"></script>
-		<script src="scripts/app-4e8a60bccd.js"></script>
+		<script src="scripts/app-075dfccb58.js"></script>
 		<!-- endinject -->
     </body>
 

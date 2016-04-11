@@ -1,0 +1,47 @@
+<div layout="column" layout-align="center center">
+	<a href="/#dashboard" target="_self">
+		<img src="./images/expressive.png" class="logo-small" alt="expressive">
+	</a>
+	<md-card class="card-login">
+		<h1 class="md-toolbar-tools">Sign up</h1>
+		<form ng-submit="doSignUp()" class="form-padding">
+			<md-input-container class="md-block">
+				<label>Name</label>
+				<input ng-model="user.name" ng-disabled="promise" type="text" autofocus required>
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Email</label>
+				<input ng-model="user.email" ng-disabled="promise" type="email" autofocus required>
+			</md-input-container>
+			<md-input-container class="md-block">
+				<label>Password</label>
+				<input ng-model="user.password" ng-disabled="promise" type="password" ng-minlength="8" required>
+			</md-input-container>
+			<p ng-if="message" class="danger">{{message}}</p>
+			<md-card-actions>
+				<div layout="row">
+					<md-button type="submit" flex ng-disabled="promise || !user.name || !user.email || !user.password" class="md-raised md-primary">Sign up</md-button>
+				</div>
+				<div layout="row" class="or-login" layout-align="center center">
+					OR
+				</div>
+				<div layout-gt-xs="row" layout-align="center center">
+					<div flex>
+						<md-button class="md-raised md-primary md-social md-social-google">
+							<md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
+							<span>Sign up with Google</span>
+						</md-button>
+					</div>
+					<div class="spanner"></div>
+					<div flex>
+						<md-button class="md-raised md-primary md-social md-social-facebook">
+							<md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
+							<span>Sign up with Facebook</span>
+						</md-button>
+					</div>
+				</div>
+				<p>Already have account? <a href="/#signin">Sign in now</a></p>
+			</md-card-actions>
+		</form>
+	</md-card>
+</div>

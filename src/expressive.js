@@ -2,13 +2,11 @@
     'use strict';
 
     // Custom script
-    window.onload = function() {
-        $('.menu-list').each(function() {
-            if ($(this).parent().find('exv-sidenav-child').length) {
-                $(this).append('<i class="zmdi zmdi-chevron-down zmdi-hc-lg exv-arrow-menu"></i>');
-            }
-        });
-    };
+    $('.menu-list').each(function() {
+        if ($(this).parent().find('exv-sidenav-child').length) {
+            $(this).append('<i class="zmdi zmdi-chevron-down zmdi-hc-lg exv-arrow-menu"></i>');
+        }
+    });
 
     var app = angular.module('Expressive', []);
     /**

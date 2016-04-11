@@ -1,0 +1,38 @@
+<md-dialog aria-label="Add" flex="50" flex-sm="80" flex-xs="100">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>{{title}}</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="close()">
+                <md-icon md-font-icon="zmdi-close" class="zmdi zmdi-hc-lg" aria-label="Close dialog"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <form name="sandboxForm" ng-submit="save()">
+        <md-dialog-content class="dialog-padding">
+            <md-input-container class="md-block">
+                <label>Name*</label>
+                <input type="text" required name="name" ng-model="sandbox.name">
+                <div ng-messages="sandboxForm.name.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+			<md-radio-group ng-model="sandbox.gender">
+				<md-radio-button value="male" class="md-primary">Male</md-radio-button>
+			    <md-radio-button value="female" class="md-primary">Female</md-radio-button>
+			</md-radio-group>
+			<br>
+            <md-input-container class="md-block">
+                <label>Address*</label>
+                <input type="text" required name="address" ng-model="sandbox.address">
+                <div ng-messages="sandboxForm.address.$error">
+                    <div ng-message="required">This is required.</div>
+                </div>
+            </md-input-container>
+            <span class="danger">{{formMessage}}</span>
+        </md-dialog-content>
+        <md-dialog-actions>
+            <md-button type="submit" class="md-raised md-primary">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

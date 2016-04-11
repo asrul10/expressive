@@ -10,6 +10,17 @@
         return $resource('/api/auth');
     });
 
+    // Sandbox
+    app.factory('Sandbox', function($resource) {
+        return $resource('/api/sandbox/:id', {
+            id: '@_id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+    });
+
     // User
     app.factory('User', function($resource) {
         return $resource('/api/user/:id', {

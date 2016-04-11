@@ -24,10 +24,20 @@
                 templateUrl: '/templates/dashboard.html',
                 controller: 'DashboardCtrl'
             })
-            .when('/login', {
-                title: 'Expressive : Login',
-                templateUrl: "/templates/login.html",
-                controller: "LoginCtrl"
+            .when('/signin', {
+                title: 'Expressive : Sign in',
+                templateUrl: "/templates/signin.html",
+                controller: "SignInCtrl"
+            })
+            .when('/signup', {
+                title: 'Expressive : Sign Up',
+                templateUrl: "/templates/signup.html",
+                controller: "SignUpCtrl"
+            })
+            .when('/sandbox', {
+                title: 'Expressive : Sandbox',
+                templateUrl: '/templates/sandbox.html',
+                controller: 'SandboxCtrl'
             })
             .when('/users', {
                 title: 'Expressive : Users',

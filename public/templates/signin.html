@@ -11,7 +11,7 @@
 			</md-input-container>
 			<md-input-container class="md-block">
 				<label>Password</label>
-				<input ng-model="user.password" ng-disabled="promise" type="password" required>
+				<input ng-model="user.password" ng-disabled="promise" type="password" ng-minlength="8" required>
 			</md-input-container>
 			<p ng-if="message" class="danger">{{message}}</p>
 			<div layout="row">
@@ -23,7 +23,7 @@
 			</div>
 			<md-card-actions>
 				<div layout="row">
-					<md-button type="submit" flex ng-disabled="promise || !user.email || !user.password" class="md-raised md-primary">Login</md-button>
+					<md-button type="submit" flex ng-disabled="promise || !user.email || !user.password" class="md-raised md-primary">Sign in</md-button>
 				</div>
 				<div layout="row" class="or-login" layout-align="center center">
 					OR
@@ -32,17 +32,18 @@
 					<div flex>
 						<md-button class="md-raised md-primary md-social md-social-google">
 							<md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
-							<span>Login with Google</span>
+							<span>Sign in with Google</span>
 						</md-button>
 					</div>
 					<div class="spanner"></div>
 					<div flex>
 						<md-button class="md-raised md-primary md-social md-social-facebook">
 							<md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
-							<span>Login with Facebook</span>
+							<span>Sign in with Facebook</span>
 						</md-button>
 					</div>
 				</div>
+				<p>Don't have account? <a href="/#signup">Sign up now</a></p>
 			</md-card-actions>
 		</form>
 	</md-card>

@@ -9,13 +9,13 @@ function password(string) {
 // Model
 var User = models.user;
 var Group = models.userGroup;
+var Sandbox = models.sandBox;
 
 // Sync
 User.sync({ force: true }).then(function(res) {
 	User.create({
-		firstName: 'Asrul',
-		lastName: 'Hanafi',
-		email: 'hanafi.asrul@gmail.com',
+		name: 'Admin',
+		email: 'admin@admin.com',
 		groups: JSON.stringify([1, 2]),
 		password: password('password')
 	});
@@ -29,3 +29,5 @@ Group.sync({ force: true }).then(function() {
 		groupName: 'Member'
 	});
 });
+
+Sandbox.sync({ force: true });

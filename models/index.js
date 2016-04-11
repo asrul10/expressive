@@ -11,13 +11,9 @@ var sequelize = new Sequelize(
 
 // Models
 module.exports.user = sequelize.define('user', {
-    firstName: {
+    name: {
         type: Sequelize.STRING,
-        field: 'first_name'
-    },
-    lastName: {
-        type: Sequelize.STRING,
-        field: 'last_name'
+        field: 'name'
     },
     email: {
         type: Sequelize.STRING(255),
@@ -43,6 +39,23 @@ module.exports.userGroup = sequelize.define('user_group', {
         type: Sequelize.STRING,
         field: 'group_name'
     }
+}, {
+    freezeTableName: true,
+});
+
+module.exports.sandBox = sequelize.define('sandbox', {
+    name: {
+        type: Sequelize.STRING,
+        field: 'name'
+    },
+    gender: {
+        type: Sequelize.STRING,
+        field: 'gender'
+    },
+    address: {
+        type: Sequelize.TEXT,
+        field: 'address'
+    },
 }, {
     freezeTableName: true,
 });

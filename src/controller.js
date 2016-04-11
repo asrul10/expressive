@@ -9,7 +9,17 @@
         $scope.height = $window.innerHeight;
 
         Auth.get(function(res) {
+            var adminUser = JSON.parse(res.user.groups);
+            var adminId = 1;
+            var username = res.user.name.split(' ');
+
             $scope.loggedin = true;
+            $scope.username = username[0];
+            if (adminUser.indexOf(adminId) < 0) {
+                $scope.admin = false;
+            } else {
+                $scope.admin = true;
+            }
         }, function(err) {
             $scope.loggedin = false;
         });
@@ -31,7 +41,7 @@
 
         $scope.logout = function() {
             $cookies.remove('token');
-            $window.location.href = '/login';
+            $window.location.href = '/signin';
         };
     });
 
@@ -39,11 +49,12 @@
         // Page.setTitle(title('Dashboard'));
     });
 
-    app.controller('LoginCtrl', function($scope, $window, $cookies, $location, Auth) {
+    app.controller('SignInCtrl', function($scope, $window, $cookies, $location, Auth) {
         $scope.promise = false;
         $scope.noNav = true;
 
         $scope.doLogin = function() {
+            $scope.message = false;
             $scope.promise = true;
             Auth.save(this.user, function(res) {
                 $cookies.put('token', res.token);
@@ -60,12 +71,200 @@
         };
     });
 
-    app.controller('UsersCtrl', function($scope, $location, $q, $mdDialog, User, Group) {
+    app.controller('SignUpCtrl', function($scope, $window, $cookies, $location, User, Auth) {
+        $scope.doSignUp = function() {
+            $scope.message = false;
+            User.save(this.user, function(res) {
+                if (res.success) {
+                    $scope.promise = true;
+                    Auth.save($scope.user, function(res) {
+                        $cookies.put('token', res.token);
+                        if (res.success) {
+                            $window.location.href = '/dashboard';
+                        } else {
+                            $scope.promise = false;
+                            $scope.message = res.message;
+                        }
+                    }, function(err) {
+                        $scope.promise = false;
+                        console.log(err);
+                    });
+                } else {
+                    $scope.message = res.message;
+                }
+            });
+        };
+    });
+
+    app.controller('SandboxCtrl', function($scope, $window, $q, $mdDialog, Sandbox) {
         $scope.pagination = {
             page: 1,
             limit: 5
         };
-        $scope.order = 'firstName';
+        $scope.order = 'name';
+        $scope.selected = [];
+        var offset = 0;
+        var sort = 'ASC';
+
+        function getSandbox(params) {
+            var deferred = $q.defer();
+            $scope.promise = deferred.promise;
+
+            params.attributes = ['name', 'id', 'address', 'gender'];
+            if (!params.order) {
+                params.order = 'name';
+            }
+            Sandbox.get(params, function(res) {
+                $scope.sandbox = res.sandbox;
+                console.log(res);
+                $scope.pagination.total = res.countAll;
+                deferred.resolve();
+            }, function(err) {
+                $window.location.href = '/signin';
+            });
+        }
+
+        function reloadSandbox() {
+            getSandbox({
+                limit: $scope.pagination.limit,
+                offset: offset,
+                order: $scope.order.replace('-', ''),
+                sort: sort,
+                search: $scope.searchModel
+            });
+            $scope.selected = [];
+        }
+
+        $scope.onReorder = function(order) {
+            sort = 'ASC';
+            if (!order.indexOf('-')) {
+                sort = 'DESC';
+                order = order.replace('-', '');
+            }
+            getSandbox({
+                limit: $scope.pagination.limit,
+                offset: offset,
+                order: order,
+                sort: sort,
+                search: $scope.searchModel
+            });
+        };
+
+        $scope.onPaginate = function(page, limit) {
+            offset = (page - 1) * limit;
+            getSandbox({
+                limit: limit,
+                offset: offset,
+                order: $scope.order.replace('-', ''),
+                sort: sort,
+                search: $scope.searchModel
+            });
+        };
+
+        $scope.delete = function() {
+            var id = [];
+            $scope.selected.forEach(function(element, index) {
+                id.push(element.id);
+            });
+            var params = {
+                ids: id
+            };
+
+            Sandbox.delete(params, function(res) {
+                reloadSandbox();
+            });
+        };
+
+        $scope.$watch('searchModel', function() {
+            if ($scope.searchModel) {
+                getSandbox({
+                    limit: $scope.pagination.limit,
+                    order: $scope.order.replace('-', ''),
+                    sort: sort,
+                    search: $scope.searchModel
+                });
+                $scope.pagination.page = 1;
+            } else {
+                getSandbox({
+                    limit: $scope.pagination.limit,
+                    order: $scope.order.replace('-', ''),
+                    sort: sort,
+                    search: $scope.searchModel
+                });
+                $scope.pagination.page = 1;
+            }
+        });
+
+        $scope.addSandbox = function(ev) {
+            $mdDialog.show({
+                controller: function($scope, $mdDialog) {
+                    $scope.title = 'Add Sandbox';
+                    $scope.save = function() {
+                        Sandbox.save(this.sandbox, function(res) {
+                            if (res.success) {
+                                reloadSandbox();
+                                $mdDialog.hide();
+                            } else {
+                                $scope.formMessage = res.message;
+                            }
+                        });
+                    };
+
+                    $scope.close = function() {
+                        $mdDialog.cancel();
+                    };
+                },
+                templateUrl: 'templates/form-sandbox.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+
+        $scope.editSandbox = function(ev, id) {
+            $mdDialog.show({
+                controller: function($scope, $mdDialog) {
+                    $scope.title = 'Edit Sandbox';
+                    Sandbox.get({
+                        id: id
+                    }, function(res) {
+                        $scope.sandbox = res;
+                    }, function(err) {
+                        console.log(err);
+                    });
+
+                    $scope.save = function() {
+                        var id = this.sandbox.id;
+                        Sandbox.update({
+                            id: id
+                        }, this.sandbox, function(res) {
+                            if (res.success) {
+                                reloadSandbox();
+                                $mdDialog.hide();
+                            } else {
+                                $scope.formMessage = res.message;
+                            }
+                        });
+                    };
+
+                    $scope.close = function() {
+                        $mdDialog.cancel();
+                    };
+                },
+                templateUrl: 'templates/form-sandbox.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+    });
+
+    app.controller('UsersCtrl', function($scope, $window, $q, $mdDialog, User, Group) {
+        $scope.pagination = {
+            page: 1,
+            limit: 5
+        };
+        $scope.order = 'name';
         $scope.selected = [];
         var offset = 0;
         var sort = 'ASC';
@@ -74,16 +273,16 @@
             var deferred = $q.defer();
             $scope.promise = deferred.promise;
 
-            params.attributes = ['firstName', 'lastName', 'email', 'id'];
+            params.attributes = ['name', 'email', 'id'];
             if (!params.order) {
-                params.order = 'firstName';
+                params.order = 'name';
             }
             User.get(params, function(res) {
                 $scope.users = res.users;
                 $scope.pagination.total = res.countAll;
                 deferred.resolve();
             }, function(err) {
-                $location.path('/login');
+                $window.location.href = '/signin';
             });
         }
 
@@ -134,7 +333,6 @@
             };
 
             User.delete(params, function(res) {
-                console.log(res);
                 reloadUser();
             });
         };
@@ -259,7 +457,7 @@
         };
     });
 
-    app.controller('GroupsCtrl', function($scope, $location, $q, $mdDialog, Group) {
+    app.controller('GroupsCtrl', function($scope, $window, $q, $mdDialog, Group) {
         $scope.pagination = {
             page: 1,
             limit: 5
@@ -282,7 +480,7 @@
                 $scope.pagination.total = res.countAll;
                 deferred.resolve();
             }, function(err) {
-                $location.path('/login');
+                $window.location.href = '/signin';
             });
         }
 

@@ -32,10 +32,32 @@ if (process.env.NODE_ENV !== 'production') {
 // Model
 var User = models.user;
 var Group = models.userGroup;
+var Sandbox = models.sandBox;
+
+// Groups Privilage
+var privilageId = {
+    admin: 1,
+    member: 2
+};
+
+// Admin Privilage
+function privilageAdmin(req) {
+    var token = req.body.token || req.query.token || req.cookies.token;
+    var user = jwt.decode(token);
+    if (JSON.parse(user.groups).indexOf(privilageId.admin) < 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
 
 // Route
-app.get('/login', function(req, res) {
-    res.render('login');
+app.get('/signin', function(req, res) {
+    res.render('auth');
+});
+
+app.get('/signup', function(req, res) {
+    res.render('auth');
 });
 
 app.get('*', function(req, res, next) {
@@ -46,7 +68,7 @@ app.get('*', function(req, res, next) {
     }
 });
 
-// REST
+// Sign in User
 app.post('/api/auth', function(req, res) {
     User.findOne({
         where: {
@@ -68,6 +90,8 @@ app.post('/api/auth', function(req, res) {
             } else {
                 var tok = {
                     id: user.id,
+                    name: user.name,
+                    groups: user.groups,
                     email: user.email
                 };
 
@@ -90,6 +114,51 @@ app.post('/api/auth', function(req, res) {
     });
 });
 
+// Sign up User
+app.post('/api/user', function(req, res) {
+    var groups = req.body.groups ? req.body.groups : ['[', privilageId.member, ']'].join('');
+
+    var userData = {
+        name: req.body.name,
+        email: req.body.email,
+        groups: groups,
+        password: req.body.password
+    };
+
+    if (req.body.password.length >= 8) {
+        userData.password = app.get('hashPassword')(userData.password);
+        User.findOrCreate({
+            where: {
+                email: req.body.email
+            },
+            defaults: userData
+        }).spread(function(user, created) {
+            if (created) {
+                res.status(201).json({
+                    success: true,
+                    message: 'User created'
+                });
+            } else {
+                res.json({
+                    success: false,
+                    message: 'Email already exist'
+                });
+            }
+        }).catch(function(err) {
+            res.status(403).json({
+                success: false,
+                message: err.errors
+            });
+        });
+    } else {
+        res.json({
+            success: false,
+            message: 'Minimum password length 8'
+        });
+    }
+});
+
+// Middleware
 app.use(function(req, res, next) {
     var token = req.body.token || req.query.token || req.cookies.token;
     if (token) {
@@ -112,6 +181,7 @@ app.use(function(req, res, next) {
     }
 });
 
+// Check Auth
 app.get('/api/auth', function(req, res) {
     var token = req.body.token || req.query.token || req.cookies.token;
     var decoded = jwt.decode(token);
@@ -123,32 +193,24 @@ app.get('/api/auth', function(req, res) {
     });
 });
 
-// User
-app.post('/api/user', function(req, res) {
-    var userData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        groups: req.body.groups,
-        password: req.body.password
+// Sandbox
+app.post('/api/sandbox', function(req, res) {
+    var sandboxData = {
+        name: req.body.name,
+        gender: req.body.gender,
+        address: req.body.address
     };
 
-    userData.password = app.get('hashPassword')(userData.password);
-    User.findOrCreate({
-        where: {
-            email: req.body.email
-        },
-        defaults: userData
-    }).spread(function(user, created) {
-        if (created) {
-            res.status(201).json({
+    Sandbox.create(sandboxData).then(function(sandbox) {
+        if (sandbox) {
+            res.json({
                 success: true,
-                message: 'User created'
+                message: 'Sandbox created'
             });
         } else {
             res.json({
                 success: false,
-                message: 'Email already exist'
+                message: 'Failed create sandbox'
             });
         }
     }).catch(function(err) {
@@ -159,10 +221,137 @@ app.post('/api/user', function(req, res) {
     });
 });
 
+app.put('/api/sandbox/:id', function(req, res) {
+    var sandboxData = {
+        name: req.body.name,
+        gender: req.body.gender,
+        address: req.body.address
+    };
+
+    Sandbox.update(sandboxData, {
+        where: {
+            id: req.params.id
+        }
+    }).then(function(sandbox) {
+        if (sandbox) {
+            res.json({
+                success: true,
+                message: 'Sandbox updated'
+            });
+        } else {
+            res.json({
+                success: false,
+                message: 'Failed update'
+            });
+        }
+    }).catch(function(err) {
+        res.status(403).json({
+            success: false,
+            message: err.errors
+        });
+    });
+});
+
+app.get('/api/sandbox', function(req, res) {
+    var offset = 0;
+    if (req.query.offset) {
+        offset = parseInt(req.query.offset);
+    }
+
+    var limit = 10;
+    if (req.query.limit) {
+        limit = parseInt(req.query.limit);
+    }
+
+    order = null;
+    if (req.query.order) {
+        var sort = req.query.sort ? req.query.sort : 'ASC';
+        order = [
+            [req.query.order, sort]
+        ];
+    }
+
+    var options = {
+        offset: offset,
+        limit: limit,
+        attributes: req.query.attributes,
+        order: order
+    };
+
+    if (req.query.search) {
+        var val = {
+            $like: '%' + req.query.search + '%'
+        };
+        options.where = {
+            $or: [{
+                name: val
+            }, {
+                gender: val
+            }, {
+                address: val
+            }]
+        };
+    }
+
+    Sandbox.findAndCountAll(options).then(function(sandbox) {
+        if (sandbox) {
+            res.json({
+                sandbox: sandbox.rows,
+                countAll: sandbox.count
+            });
+        } else {
+            res.status(204).json({
+                success: false,
+                message: 'Sandbox not found'
+            });
+        }
+    });
+});
+
+app.get('/api/sandbox/:id', function(req, res) {
+    Sandbox.findById(req.params.id).then(function(sandbox) {
+        if (sandbox) {
+            res.json(sandbox);
+        } else {
+            res.status(204).json({
+                success: false,
+                message: 'Sandbox not found'
+            });
+        }
+    });
+});
+
+app.delete('/api/sandbox', function(req, res) {
+    if (req.query.ids.isArray) {
+        paramId = { in : req.query.ids
+        };
+    } else {
+        paramId = req.query.ids;
+    }
+
+    Sandbox.destroy({
+        where: {
+            id: paramId
+        }
+    }).then(function(sandbox) {
+        if (sandbox) {
+            res.json({
+                success: true,
+                message: 'Sandbox deleted'
+            });
+        } else {
+            res.status(204).json({
+                success: false,
+                message: 'Sandbox not found'
+            });
+        }
+    });
+});
+
+// User
 app.put('/api/user/:id', function(req, res) {
     var userData = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        name: req.body.name,
         email: req.body.email,
         groups: req.body.groups
     };
@@ -195,6 +384,13 @@ app.put('/api/user/:id', function(req, res) {
 });
 
 app.get('/api/user', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     var offset = 0;
     if (req.query.offset) {
         offset = parseInt(req.query.offset);
@@ -226,9 +422,7 @@ app.get('/api/user', function(req, res) {
         };
         options.where = {
             $or: [{
-                firstName: val
-            }, {
-                lastName: val
+                name: val
             }, {
                 email: val
             }]
@@ -264,6 +458,13 @@ app.get('/api/user/:id', function(req, res) {
 });
 
 app.delete('/api/user', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     if (req.query.ids.isArray) {
         paramId = { in : req.query.ids
         };
@@ -292,6 +493,13 @@ app.delete('/api/user', function(req, res) {
 
 // Group
 app.post('/api/group', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     var groupData = {
         groupName: req.body.groupName,
     };
@@ -317,6 +525,13 @@ app.post('/api/group', function(req, res) {
 });
 
 app.put('/api/group/:id', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     var groupData = {
         groupName: req.body.groupName,
     };
@@ -346,6 +561,13 @@ app.put('/api/group/:id', function(req, res) {
 });
 
 app.get('/api/group', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     var offset = 0;
     if (req.query.offset) {
         offset = parseInt(req.query.offset);
@@ -398,6 +620,13 @@ app.get('/api/group', function(req, res) {
 });
 
 app.get('/api/group/:id', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     Group.findById(req.params.id).then(function(group) {
         if (group) {
             res.json(group);
@@ -411,6 +640,13 @@ app.get('/api/group/:id', function(req, res) {
 });
 
 app.delete('/api/group', function(req, res) {
+    if (!privilageAdmin(req)) {
+        return res.status(401).json({
+            success: false,
+            message: 'Not allowed'
+        });
+    }
+
     if (req.query.ids.isArray) {
         paramId = { in : req.query.ids
         };

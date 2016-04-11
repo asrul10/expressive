@@ -11,22 +11,15 @@
 	<form name="userForm" ng-submit="save()">
 	    <md-dialog-content class="dialog-padding">
 			<md-input-container class="md-block">
-			    <label>First Name*</label>
-			    <input type="text" required name="firstName" ng-model="user.firstName">
-			    <div ng-messages="userForm.firstName.$error">
-			        <div ng-message="required">This is required.</div>
-			    </div>
-			</md-input-container>
-			<md-input-container class="md-block">
-			    <label>Last Name*</label>
-			    <input type="text" required name="lastName" ng-model="user.lastName">
-			    <div ng-messages="userForm.lastName.$error">
+			    <label>Name*</label>
+			    <input type="text" required name="name" ng-model="user.name">
+			    <div ng-messages="userForm.name.$error">
 			        <div ng-message="required">This is required.</div>
 			    </div>
 			</md-input-container>
 			<md-input-container class="md-block">
 			    <label>Email*</label>
-			    <input type="text" required name="email" ng-model="user.email">
+			    <input type="email" required name="email" ng-model="user.email">
 			    <div ng-messages="userForm.email.$error">
 			        <div ng-message="required">This is required.</div>
 			    </div>

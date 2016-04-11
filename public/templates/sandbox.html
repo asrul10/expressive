@@ -10,9 +10,9 @@
     </md-toolbar>
     <md-toolbar class="toolbar-card" ng-hide="selected.length || search">
         <div class="md-toolbar-tools">
-            <h2 class="md-title">Users</h2>
+            <h2 class="md-title">Sandbox</h2>
             <div flex></div>
-            <md-button ng-click="addUser($event)" class="md-icon-button" aria-label="add">
+            <md-button ng-click="addSandbox($event)" class="md-icon-button" aria-label="add">
                 <md-icon md-font-icon="zmdi-account-add" class="zmdi zmdi-hc-lg"></md-icon>
             </md-button>
             <md-button ng-click="search = true" class="md-icon-button" aria-label="search">
@@ -35,16 +35,18 @@
             <thead md-head md-order="order" md-on-reorder="onReorder">
                 <tr md-row>
                     <th md-column md-order-by="name"><span>Name</span></th>
-                    <th md-column md-order-by="email"><span>Email</span></th>
+                    <th md-column md-order-by="email"><span>Gender</span></th>
+                    <th md-column md-order-by="email"><span>Address</span></th>
                     <th md-column></th>
                 </tr>
             </thead>
             <tbody md-body>
-                <tr md-row md-select="user" md-select-id="{{user.id}}" ng-repeat="user in users">
-                    <td md-cell>{{user.name}}</td>
-                    <td md-cell>{{user.email}}</td>
+                <tr md-row md-select="box" md-select-id="{{box.id}}" ng-repeat="box in sandbox">
+                    <td md-cell>{{box.name}}</td>
+                    <td md-cell>{{box.gender}}</td>
+                    <td md-cell>{{box.address}}</td>
                     <td md-cell layout="row" layout-align="end center">
-                        <md-button ng-click="editUser($event, user.id)" class="md-icon-button" aria-label="edit">
+                        <md-button ng-click="editSandbox($event, box.id)" class="md-icon-button" aria-label="edit">
                             <md-icon md-font-icon="zmdi-edit" class="zmdi zmdi-hc-lg"></md-icon>
                         </md-button>
                     </td>

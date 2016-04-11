@@ -26,4 +26,4 @@ if (process.env.NODE_ENV === 'production') {
     };
 }
 
-module.exports.secret = 'kotaxdevSecret';
+module.exports.secret = 'expressive';
