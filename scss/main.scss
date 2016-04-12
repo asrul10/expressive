@@ -27,6 +27,13 @@ md-toolbar {
         }
     }
 }
+md-toolbar:not(.md-menu-toolbar).search {
+    background-color: #fff;
+    color: #000;
+    md-icon {
+        color: #000;
+    }
+}
 .dialog-padding {
     padding: 24px;
 }

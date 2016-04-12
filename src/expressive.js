@@ -96,7 +96,7 @@
     });
 
     /**
-     * Custom Directive
+     * Element Scroll
      */
     app.directive('exvFullHeight', function($window) {
         return {
@@ -122,7 +122,7 @@
             restrict: 'E',
             transclude: true,
             template: '<div class="elm-scroll" ng-transclude></div>',
-            link: function (scope, element, attrs) {
+            link: function(scope, element, attrs) {
                 if (attrs.mainContent === 'true') {
                     element.attr('id', 'mainContent');
                 }
@@ -130,4 +130,47 @@
         };
     });
 
+    /**
+     * Background top
+     */
+    app.directive('exvBackgroundTop', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            template: '<div class="exv-background-top" ng-transclude></div>',
+            link: function(scope, element, attrs) {
+                if (attrs.background) {
+                    element.children().css('background', attrs.background);
+                }
+                if (attrs.color) {
+                    element.children().css('color', attrs.color);
+                }
+            }
+        };
+    });
+
+    app.directive('exvTitle', function() {
+        return {
+            restrict: 'E',
+            transclude: true,
+            template: '<h1 class="exv-title" ng-transclude></h1>',
+            link: function(scope, element, attrs) {
+                $('exv-sub-title').children().text(element.text());
+                $(element).closest('exv-scroll').children().scroll(function() {
+                    if ($(this).scrollTop() >= 70) {
+                        $('exv-sub-title').children().addClass('active');
+                    } else if ($(this).scrollTop() <= 70) {
+                        $('exv-sub-title').children().removeClass('active');
+                    }
+                });
+            }
+        };
+    });
+
+    app.directive('exvSubTitle', function() {
+        return {
+            restrict: 'E',
+            template: '<span class="exv-sub-title"></span>'
+        };
+    });
 })(window, angular);

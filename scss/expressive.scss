@@ -69,11 +69,34 @@ a {
     }
 }
 /**
+ * Background top
+ */
+.exv-background-top {
+    margin-left: -8px;
+    margin-top: -26px;
+    margin-right: -8px;
+    padding: 16px;
+    min-height: 150px;
+    background: #1565C0;
+    color: #fff;
+}
+.exv-title {
+    font-weight: lighter;
+}
+.exv-sub-title {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    &.active {
+        opacity: 1;
+    }
+}
+/**
  * Topnav
  */
 .exv-topnav {
     height: 64px;
     padding: 10px 20px;
+    transition: all 0.3s ease;
     .md-menu {
         margin: inherit;
     }
@@ -87,9 +110,6 @@ a {
         button {
             background-color: rgba(255, 255, 255, 0.2);
         }
-    }
-    .exv-search-toolbar {
-        color: #fff;
     }
 }
 .exv-search-toolbar {
@@ -214,4 +234,16 @@ a {
 .ps-container > .ps-scrollbar-y-rail,
 .ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
     width: 5px;
+}
+/**
+ * Animate view
+ */
+.exv-animate-view {
+    margin-top: 0;
+    opacity: 1;
+    transition: all 0.3s ease;
+}
+.exv-animate-view.ng-enter {
+    margin-top: 150px;
+    opacity: 0;
 }
