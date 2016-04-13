@@ -9,6 +9,11 @@ $color-disabled: #BDBDBD;
     width: 60px;
     margin-bottom: 15px;
 }
+.list {
+    li {
+        padding: 3px 0;
+    }
+}
 md-toolbar {
     &.toolbar-card {
         background: transparent;

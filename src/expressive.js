@@ -72,7 +72,7 @@
             restrict: 'E',
             transclude: true,
             link: function(scope, element) {
-                scope.clickMenu = function() {
+                element.bind('click', function() {
                     var contentScroller = document.getElementsByClassName("exv-sidenav-item");
                     var collapsed = false;
                     if (element.hasClass('collapsed')) {
@@ -86,10 +86,10 @@
                             element.addClass('collapsed');
                         }
                     }
-                };
+                });
             },
             template: [
-                '<li class="exv-sidenav-item" ng-click="clickMenu()" ng-transclude>',
+                '<li class="exv-sidenav-item" ng-transclude>',
                 '</li>'
             ].join('')
         };
@@ -155,12 +155,17 @@
             transclude: true,
             template: '<h1 class="exv-title" ng-transclude></h1>',
             link: function(scope, element, attrs) {
-                $('exv-sub-title').children().text(element.text());
+                var subTitle = $('exv-sub-title').children();
+                subTitle.text(element.text());
                 $(element).closest('exv-scroll').children().scroll(function() {
                     if ($(this).scrollTop() >= 70) {
-                        $('exv-sub-title').children().addClass('active');
+                        if (!subTitle.hasClass('active')) {
+                            subTitle.addClass('active');
+                        }
                     } else if ($(this).scrollTop() <= 70) {
-                        $('exv-sub-title').children().removeClass('active');
+                        if (subTitle.hasClass('active')) {
+                            subTitle.removeClass('active');
+                        }
                     }
                 });
             }

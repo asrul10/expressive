@@ -1,0 +1,67 @@
+<exv-background-top>
+    <exv-title>Introduction Expressive</exv-title>
+    <p>Expressive is bundled web app call M-EAN (MySQL, Expressjs, Angularjs, and Nodejs) it also integrated with Angular Material as a theme.</p>
+	<md-menu class="exv-share-float" md-offset="0 8" md-position-mode="target-right target">
+		<md-button class="md-fab md-raised" aria-label="share" ng-click="$mdOpenMenu()">
+			<md-icon md-font-icon="zmdi-share" class="zmdi zmdi-hc-lg"></md-icon>
+	    </md-button>
+		<md-menu-content md-whiteframe="10">
+			<md-menu-item>
+				<md-button>
+					<md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
+					Facebook
+				</md-button>
+			</md-menu-item>
+			<md-menu-item>
+				<md-button>
+					<md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
+					Google Plus
+				</md-button>
+			</md-menu-item>
+			<md-menu-item>
+				<md-button>
+					<md-icon md-font-icon="zmdi-twitter" class="zmdi zmdi-hc-lg"></md-icon>
+					Twitter
+				</md-button>
+			</md-menu-item>
+		</md-menu-content>
+	</md-menu>
+</exv-background-top>
+<div class="md-headline">Feature</div>
+<div>
+    <ul class="list">
+        <li>Build System <b>Gulp</b></li>
+        <li>Package manager <b>Bower</b></li>
+        <li>Framework <b>Angularjs</b></li>
+        <li>Theme <b>Angular Material</b></li>
+    </ul>
+</div>
+<div class="md-headline">Installation</div>
+<div>
+    <ol class="list">
+        <li>Install <b>gulp-cli</b>, <b>nodemon</b>, and <b>bower</b> globally</li>
+        <li>
+            Clone expressive
+            <pre>$ git clone https://github.com/asrul10/expressive.git</pre>
+        </li>
+        <li>
+            Install node packages
+            <pre>$ npm install</pre>
+        </li>
+        <li>
+            Install bower packages
+            <pre>$ bower install</pre>
+        </li>
+        <li>
+            Config databses in <b>config/index.js</b>
+        </li>
+        <li>
+            Sync models
+            <pre>$ node sync.js</pre>
+        </li>
+        <li>
+            Run expressive
+            <pre>$ nodemon</pre>
+        </li>
+    </ol>
+</div>

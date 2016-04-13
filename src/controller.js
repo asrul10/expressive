@@ -45,8 +45,12 @@
         };
     });
 
-    app.controller('DashboardCtrl', function($scope, $location, $http) {
-        // Page.setTitle(title('Dashboard'));
+    app.controller('IntroductionCtrl', function($scope) {
+        // Do magic think here
+    });
+
+    app.controller('DashboardCtrl', function($scope) {
+        // Do magic think here
     });
 
     app.controller('SignInCtrl', function($scope, $window, $cookies, $location, Auth) {
@@ -116,7 +120,6 @@
             }
             Sandbox.get(params, function(res) {
                 $scope.sandbox = res.sandbox;
-                console.log(res);
                 $scope.pagination.total = res.countAll;
                 deferred.resolve();
             }, function(err) {

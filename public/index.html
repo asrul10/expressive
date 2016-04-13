@@ -7,7 +7,7 @@
         <meta content="width=device-width, initial-scale=1, user-scalable=0" name="viewport"/>
         <!-- inject:css -->
 		<link rel="stylesheet" href="vendor/css/vendor-f04653dc4d.css">
-		<link rel="stylesheet" href="styles/main-515d96e5d2.css">
+		<link rel="stylesheet" href="styles/main-e7a7625ba0.css">
 		<!-- endinject -->
     </head>
 
@@ -19,21 +19,60 @@
                 </md-toolbar>
                 <exv-scroll exv-full-height="-64">
                     <md-content>
-                        <exv-sidenav-title>Main Menu</exv-sidenav-title>
                         <exv-sidenav-parent>
+                            <exv-sidenav-title>Pages</exv-sidenav-title>
+                            <exv-sidenav-item>
+                                <md-button class="menu-list" href="/#" ng-click="close()">
+                                    <md-icon md-font-icon="zmdi-eye" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+                                    Introduction
+                                </md-button>
+                            </exv-sidenav-item>
+                            <exv-sidenav-item >
+                                <md-button class="menu-list">
+                                    <md-icon md-font-icon="zmdi-lock" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+                                    Authentication
+                                </md-button>
+                                <exv-sidenav-child>
+                                    <exv-sidenav-item>
+                                        <md-button class="menu-list" href="/signin" target="_self">Sign in</md-button>
+                                    </exv-sidenav-item>
+                                    <exv-sidenav-item>
+                                        <md-button class="menu-list" href="/signup" target="_self">Sign up</md-button>
+                                    </exv-sidenav-item>
+                                </exv-sidenav-child>
+                            </exv-sidenav-item>
+                            <exv-sidenav-item >
+                                <md-button class="menu-list">
+                                    <md-icon md-font-icon="zmdi-book" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+                                    Components
+                                </md-button>
+                                <exv-sidenav-child>
+                                    <exv-sidenav-item>
+                                        <md-button class="menu-list" href="/#blank" ng-click="close()">Sidenav</md-button>
+                                    </exv-sidenav-item>
+                                    <exv-sidenav-item>
+                                        <md-button class="menu-list" href="/#blank" ng-click="close()">Scroll Element</md-button>
+                                    </exv-sidenav-item>
+                                    <exv-sidenav-item>
+                                        <md-button class="menu-list" href="/#blank" ng-click="close()">Background Top</md-button>
+                                    </exv-sidenav-item>
+                                </exv-sidenav-child>
+                            </exv-sidenav-item>
+                            <exv-sidenav-title>Apps</exv-sidenav-title>
                             <exv-sidenav-item>
                                 <md-button class="menu-list" href="/#dashboard" ng-click="close()">
                                     <md-icon md-font-icon="zmdi-view-dashboard" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
                                     dashboard
                                 </md-button>
                             </exv-sidenav-item>
-                            <exv-sidenav-item ng-if="loggedin">
+                            <exv-sidenav-item ng-if="loggedin && admin">
                                 <md-button class="menu-list" href="/#sandbox" ng-click="close()">
                                     <md-icon md-font-icon="zmdi-layers" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
-                                    Sandbox
+                                    CRUD
                                 </md-button>
                             </exv-sidenav-item>
-                            <exv-sidenav-item ng-if="loggedin && admin">
+                            <exv-sidenav-title>Admin</exv-sidenav-title>
+                            <exv-sidenav-item>
                                 <md-button class="menu-list">
                                     <md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
                                     Account
@@ -61,15 +100,22 @@
                                 </md-button>
                                 <exv-sub-title></exv-sub-title>
                                 <span flex></span>
-                                <md-button aria-label="login" href="/signin" target="_self" ng-if="!loggedin">Sign in</md-button>
-                                <md-menu md-offset="0 72" md-position-mode="target-right target" ng-if="loggedin">
+                                <md-button hide-sm hide-xs aria-label="login" href="/signin" target="_self" ng-if="!loggedin">Sign in</md-button>
+                                <md-menu hide-sm hide-xs md-offset="0 72" md-position-mode="target-right target" ng-if="loggedin">
                                     <md-button aria-label="user" ng-click="$mdOpenMenu()">
                                         <div class="exv-avatar-small">
                                             <md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-2x"></md-icon>
                                         </div>
                                         {{username}}
                                     </md-button>
-                                    <md-menu-content width="4">
+                                    <md-menu-content width="3">
+                                        <md-menu-item>
+                                            <md-button>
+                                                <md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-lg"></md-icon>
+                                                My Profile
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-divider></md-menu-divider>
                                         <md-menu-item>
                                             <md-button ng-click="logout()">
                                                 Sign out
@@ -98,7 +144,7 @@
         </div>
         <!-- inject:js -->
 		<script src="vendor/js/vendor-80d9f6ab94.js"></script>
-		<script src="scripts/app-5e093d6dec.js"></script>
+		<script src="scripts/app-d86dfc21ef.js"></script>
 		<!-- endinject -->
     </body>
 

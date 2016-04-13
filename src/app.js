@@ -19,6 +19,11 @@
     // Route
     .config(function($routeProvider, $locationProvider) {
         $routeProvider
+            .when('/', {
+                title: 'Expressive : Introduction',
+                templateUrl: '/templates/introduction.html',
+                controller: 'IntroductionCtrl'
+            })
             .when('/dashboard', {
                 title: 'Expressive : Dashboard',
                 templateUrl: '/templates/dashboard.html',
@@ -50,7 +55,7 @@
                 controller: 'GroupsCtrl'
             })
             .otherwise({
-                redirectTo: '/dashboard'
+                redirectTo: '/'
             });
 
         $locationProvider.html5Mode(true);

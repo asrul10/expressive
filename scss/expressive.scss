@@ -42,6 +42,16 @@ a {
     overflow-y: hidden;
     position: relative;
 }
+md-menu-item>.md-button md-icon {
+    width: 20px
+}
+pre {
+    padding: 16px;
+    overflow: auto;
+    line-height: 1.45;
+    background-color: #E6E6E6;
+    border-radius: 3px;
+}
 /**
  * Social button
  */
@@ -73,12 +83,13 @@ a {
  */
 .exv-background-top {
     margin-left: -8px;
-    margin-top: -26px;
+    margin-top: -27px;
     margin-right: -8px;
     padding: 16px;
     min-height: 150px;
     background: #1565C0;
     color: #fff;
+    position: relative;
 }
 .exv-title {
     font-weight: lighter;
@@ -155,9 +166,10 @@ a {
     }
 }
 .exv-sidenav {
-    width: 270px;
+    width: 300px;
     background-color: $dark0;
     .exv-sidenav-title {
+        text-transform: uppercase;
         padding: 15px 20px;
         color: #8E8E8E;
     }
@@ -246,4 +258,12 @@ a {
 .exv-animate-view.ng-enter {
     margin-top: 150px;
     opacity: 0;
+}
+/**
+ * Float share
+ */
+.exv-share-float {
+    position: absolute;
+    right: 20px;
+    bottom: -40px;
 }
