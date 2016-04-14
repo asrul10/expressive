@@ -53,6 +53,10 @@
         // Do magic think here
     });
 
+    app.controller('MailCtrl', function($scope) {
+        // Do magic think here
+    });
+
     app.controller('SignInCtrl', function($scope, $window, $cookies, $location, Auth) {
         $scope.promise = false;
         $scope.noNav = true;
@@ -63,7 +67,7 @@
             Auth.save(this.user, function(res) {
                 $cookies.put('token', res.token);
                 if (res.success) {
-                    $window.location.href = '/dashboard';
+                    $window.location.href = '/';
                 } else {
                     $scope.promise = false;
                     $scope.message = res.message;

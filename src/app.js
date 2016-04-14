@@ -29,6 +29,11 @@
                 templateUrl: '/templates/dashboard.html',
                 controller: 'DashboardCtrl'
             })
+            .when('/mail', {
+                title: 'Expressive : Mail',
+                templateUrl: '/templates/mail.html',
+                controller: 'MailCtrl'
+            })
             .when('/signin', {
                 title: 'Expressive : Sign in',
                 templateUrl: "/templates/signin.html",
@@ -63,8 +68,6 @@
 
     // Material Design
     .config(function($mdThemingProvider) {
-        $mdThemingProvider.theme('default')
-            .primaryPalette('blue')
-            .accentPalette('pink');
+        $mdThemingProvider.theme('default').primaryPalette('blue').accentPalette('pink');
     });
 })(window, angular);

@@ -7,7 +7,7 @@
         <meta content="width=device-width, initial-scale=1, user-scalable=0" name="viewport"/>
         <!-- inject:css -->
 		<link rel="stylesheet" href="vendor/css/vendor-f04653dc4d.css">
-		<link rel="stylesheet" href="styles/main-e7a7625ba0.css">
+		<link rel="stylesheet" href="styles/main-29e8e028ea.css">
 		<!-- endinject -->
     </head>
 
@@ -27,7 +27,7 @@
                                     Introduction
                                 </md-button>
                             </exv-sidenav-item>
-                            <exv-sidenav-item >
+                            <exv-sidenav-item ng-if="!loggedin">
                                 <md-button class="menu-list">
                                     <md-icon md-font-icon="zmdi-lock" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
                                     Authentication
@@ -41,23 +41,6 @@
                                     </exv-sidenav-item>
                                 </exv-sidenav-child>
                             </exv-sidenav-item>
-                            <exv-sidenav-item >
-                                <md-button class="menu-list">
-                                    <md-icon md-font-icon="zmdi-book" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
-                                    Components
-                                </md-button>
-                                <exv-sidenav-child>
-                                    <exv-sidenav-item>
-                                        <md-button class="menu-list" href="/#blank" ng-click="close()">Sidenav</md-button>
-                                    </exv-sidenav-item>
-                                    <exv-sidenav-item>
-                                        <md-button class="menu-list" href="/#blank" ng-click="close()">Scroll Element</md-button>
-                                    </exv-sidenav-item>
-                                    <exv-sidenav-item>
-                                        <md-button class="menu-list" href="/#blank" ng-click="close()">Background Top</md-button>
-                                    </exv-sidenav-item>
-                                </exv-sidenav-child>
-                            </exv-sidenav-item>
                             <exv-sidenav-title>Apps</exv-sidenav-title>
                             <exv-sidenav-item>
                                 <md-button class="menu-list" href="/#dashboard" ng-click="close()">
@@ -65,14 +48,20 @@
                                     dashboard
                                 </md-button>
                             </exv-sidenav-item>
-                            <exv-sidenav-item ng-if="loggedin && admin">
+                            <!-- <exv-sidenav-item>
+                                <md-button class="menu-list" href="/#mail" ng-click="close()">
+                                    <md-icon md-font-icon="zmdi-email" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
+                                    Mail
+                                </md-button>
+                            </exv-sidenav-item> -->
+                            <exv-sidenav-item ng-if="loggedin">
                                 <md-button class="menu-list" href="/#sandbox" ng-click="close()">
                                     <md-icon md-font-icon="zmdi-layers" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
                                     CRUD
                                 </md-button>
                             </exv-sidenav-item>
-                            <exv-sidenav-title>Admin</exv-sidenav-title>
-                            <exv-sidenav-item>
+                            <exv-sidenav-title ng-if="loggedin && admin">Admin</exv-sidenav-title>
+                            <exv-sidenav-item ng-if="loggedin && admin">
                                 <md-button class="menu-list">
                                     <md-icon md-font-icon="zmdi-account" class="zmdi zmdi-hc-lg exv-menu-icon"></md-icon>
                                     Account
@@ -144,7 +133,7 @@
         </div>
         <!-- inject:js -->
 		<script src="vendor/js/vendor-80d9f6ab94.js"></script>
-		<script src="scripts/app-d86dfc21ef.js"></script>
+		<script src="scripts/app-1b64a3853d.js"></script>
 		<!-- endinject -->
     </body>
 

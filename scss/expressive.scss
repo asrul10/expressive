@@ -3,7 +3,7 @@
  */
 $success: #1E88E5;
 $danger: #EF5350;
-$warning: #FFEE58;
+$warning: #FFB300;
 $color: #5E5E5E;
 $dark0: #454545;
 $dark1: #202020;
@@ -266,4 +266,40 @@ pre {
     position: absolute;
     right: 20px;
     bottom: -40px;
+}
+/**
+ * Widget
+ */
+.exv-widget-info {
+    text-align: center;
+    md-card-title {
+        &.success {
+            background-color: $success;
+            color: #fff;
+        }
+        &.warning {
+            background-color: $warning;
+            color: #fff;
+        }
+        &.danger {
+            background-color: $danger;
+            color: #fff;
+        }
+    }
+    .exv-number-info {
+        font-size: 85px;
+        font-weight: 600;
+        text-align: center;
+        padding: 26px 16px;
+    }
+    md-card-actions {
+        border-top: 1px solid #E0E0E0;
+        background-color: #EFEFEF;
+        color: $success;
+        margin: 0;
+        button {
+            width: 100%;
+            padding: 7px 10px;
+        }
+    }
 }

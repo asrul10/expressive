@@ -96,7 +96,7 @@
     });
 
     /**
-     * Element Scroll
+     * Scroll Element
      */
     app.directive('exvFullHeight', function($window) {
         return {
@@ -178,4 +178,28 @@
             template: '<span class="exv-sub-title"></span>'
         };
     });
+
+    /**
+     * Widget info
+     */
+    app.directive('exvWidgetInfo', function() {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+                element.addClass('exv-widget-info');
+                switch (attrs.exvWidgetInfo) {
+                    case "success":
+                        element.find('md-card-title').addClass('success');
+                        break;
+                    case "warning":
+                        element.find('md-card-title').addClass('warning');
+                        break;
+                    case "danger":
+                        element.find('md-card-title').addClass('danger');
+                        break;
+                }
+            }
+        }
+    })
+
 })(window, angular);
