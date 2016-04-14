@@ -9,7 +9,7 @@ Custom M-EAN starter Mysql, Express, Angular, Nodejs with theme Angular Material
 ## Demo
 Live demo https://expressive.kotaxdev.com
 ```
-Email : admin@admin.com
+Email : demo@demo.com
 Password : password
 ```
 
