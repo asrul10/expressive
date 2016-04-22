@@ -12,6 +12,7 @@
         "ngMessages",
         "md.data.table",
         "Expressive",
+        "exvTodo",
         "Service",
         "Controller"
     ])
@@ -24,16 +25,6 @@
                 templateUrl: '/templates/introduction.html',
                 controller: 'IntroductionCtrl'
             })
-            .when('/dashboard', {
-                title: 'Expressive : Dashboard',
-                templateUrl: '/templates/dashboard.html',
-                controller: 'DashboardCtrl'
-            })
-            .when('/mail', {
-                title: 'Expressive : Mail',
-                templateUrl: '/templates/mail.html',
-                controller: 'MailCtrl'
-            })
             .when('/signin', {
                 title: 'Expressive : Sign in',
                 templateUrl: "/templates/signin.html",
@@ -44,10 +35,20 @@
                 templateUrl: "/templates/signup.html",
                 controller: "SignUpCtrl"
             })
+            .when('/dashboard', {
+                title: 'Expressive : Dashboard',
+                templateUrl: '/templates/dashboard.html',
+                controller: 'DashboardCtrl'
+            })
             .when('/sandbox', {
                 title: 'Expressive : Sandbox',
                 templateUrl: '/templates/sandbox.html',
                 controller: 'SandboxCtrl'
+            })
+            .when('/to-do', {
+                title: 'Expressive : To-Do',
+                templateUrl: '/templates/to-do.html',
+                controller: 'ToDoCtrl'
             })
             .when('/users', {
                 title: 'Expressive : Users',

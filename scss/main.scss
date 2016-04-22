@@ -61,3 +61,87 @@ md-toolbar:not(.md-menu-toolbar).search {
     width: 100%;
     height: 3px;
 }
+/**
+ * To-do apps
+ */
+.todo-title {
+    padding: 8px 16px;
+    line-height: 24px;
+    color: #A7A7A7;
+    cursor: text;
+}
+.todo-list {
+    padding: 0;
+    margin: 0;
+    .todo-check-item {
+        md-input-container {
+            padding: 0;
+            margin: 0;
+        }
+    }
+}
+.todo-new-list {
+    color: #A9A9A9;
+    cursor: text;
+    md-icon {
+        padding-right: 15px;
+        padding-left: 4px;
+    }
+}
+.todo-done {
+    text-decoration: line-through;
+    color: #A9A9A9;
+}
+.todo-color {
+    border: 1px solid #BBB;
+    width: 25px;
+    padding: 0px;
+    height: 25px;
+    margin: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    &:focus {
+        outline: transparent;
+    }
+}
+.todo-palette-list {
+    margin-left: auto;
+    margin-right: auto;
+}
+.todo-title-card {
+    font-weight: bold;
+}
+.todo-container {
+    cursor: default;
+    &:focus {
+        outline-color: transparent;
+    }
+}
+.todo-dialog {
+    width: 500px;
+}
+.todo-white {
+    background-color: #fff;
+}
+.todo-yellow {
+    background-color: #FFF176;
+}
+.todo-blue {
+    background-color: #64B5F6;
+}
+.todo-red {
+    background-color: #E57373;
+}
+.todo-grey {
+    background-color: #90A4AE;
+}
+.todo-green {
+    background-color: #81C784;
+}
+.todo-card-tool {
+    padding: 0;
+    opacity: 0;
+    &:hover {
+        opacity: 1;
+    }
+}

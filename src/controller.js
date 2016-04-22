@@ -53,8 +53,50 @@
         // Do magic think here
     });
 
-    app.controller('MailCtrl', function($scope) {
-        // Do magic think here
+    app.controller('ToDoCtrl', function($scope) {
+        var todos = [
+            {
+                id: 1,
+                title: 'Title',
+                todo: 'Lorem',
+                color: '#64B5F6',
+                check: []
+            },
+            {
+                id: 2,
+                title: 'Title 2',
+                todo: 'Lorem',
+                color: '#fff',
+                check: []
+            },
+            {
+                id: 3,
+                title: 'Title 3',
+                todo: '',
+                color: '#FFF176',
+                check: [
+                    'Test baru sadjlk uwhau',
+                    "asdklj wljawd",
+                    "awdjlakwd"
+                ]
+            }
+        ];
+
+        $scope.todos = todos.reverse();
+
+        $scope.todoSubmit = function(todo) {
+            $scope.todos.unshift(todo);
+            $scope.$apply();
+        };
+
+        $scope.todoUpdate = function(todo) {
+            console.log(todo);
+        };
+
+        $scope.todoDelete = function(todo) {
+            var id = $scope.todos.indexOf(todo);
+            $scope.todos.splice(id, 1);
+        };
     });
 
     app.controller('SignInCtrl', function($scope, $window, $cookies, $location, Auth) {

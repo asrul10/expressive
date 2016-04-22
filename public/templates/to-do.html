@@ -1,0 +1,14 @@
+<exv-background-top background="#009688">
+    <exv-title>To Do</exv-title>
+    <p>This todo apps still alpha</p>
+</exv-background-top>
+<div layout-gt-sm="row" layout-align-gt-sm="center center">
+    <div flex-gt-sm="50">
+        <exv-todo-form todo-submit="todoSubmit"></exv-todo-form>
+    </div>
+</div>
+<div layout="row" layout-align-gt-sm="center center">
+    <div flex-gt-sm="50" layout="column">
+        <exv-todo-card todos="todos" todo-update="todoUpdate" todo-delete="todoDelete"></exv-todo-card>
+    </div>
+</div>

@@ -1,24 +1,24 @@
 {
-  "name": "expressive",
-  "version": "0.5.3",
-  "description": "Expressive starter projects pack",
-  "main": "index.js",
-  "authors": [
-    "Asrul Hanafi <hanafi.asrul@gmail.com>"
-  ],
-  "license": "MIT",
-  "dependencies": {
-    "angular-material": "^1.0.7",
-    "angular-route": "^1.5.3",
-    "angular": "^1.5.3",
-    "angular-aria": "^1.5.3",
-    "angular-messages": "^1.5.3",
-    "angular-animate": "^1.5.3",
-    "angular-cookies": "^1.5.3",
-    "angular-material-data-table": "^0.9.15",
-    "material-design-iconic-font": "^2.2.0",
-    "angular-resource": "^1.5.3",
-    "PACE": "pace#^1.0.2",
-    "jquery": "^2.2.3"
-  }
+    "name": "expressive",
+    "version": "0.5.7",
+    "description": "Expressive starter projects pack",
+    "main": "index.js",
+    "authors": [
+        "Asrul Hanafi <hanafi.asrul@gmail.com>"
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "jquery": "^2.2.3",
+        "angular": "^1.5.3",
+        "angular-route": "^1.5.3",
+        "angular-cookies": "^1.5.3",
+        "angular-resource": "^1.5.3",
+        "angular-messages": "^1.5.3",
+        "angular-animate": "^1.5.3",
+        "angular-aria": "^1.5.3",
+        "angular-material": "^1.0.7",
+        "angular-material-data-table": "^0.9.15",
+        "material-design-iconic-font": "^2.2.0",
+        "PACE": "pace#^1.0.2"
+    }
 }

@@ -1,25 +1,33 @@
 <exv-background-top>
     <exv-title>Introduction Expressive</exv-title>
     <p>Expressive is bundled web app call M-EAN (MySQL, Expressjs, Angularjs, and Nodejs) it also integrated with Angular Material as a theme.</p>
+    <p class="unchanged rich-diff-level-one">
+        <a href="https://www.npmjs.com/package/expressive-angular"><img src="https://camo.githubusercontent.com/b2a60b16c7cacffef973f7599324592b6fd99f91/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f657870726573736976652d616e67756c61722e737667" alt="npm version" data-canonical-src="https://img.shields.io/npm/v/expressive-angular.svg" style="max-width:100%;"></a>
+        <a href="https://github.com/asrul10/expressive"><img src="https://camo.githubusercontent.com/cd10425328c053e7016b51c68af4c6e0d57b88d7/68747470733a2f2f696d672e736869656c64732e696f2f64617669642f617372756c31302f657870726573736976652e737667" alt="Dependency Status" data-canonical-src="https://img.shields.io/david/asrul10/expressive.svg" style="max-width:100%;"></a>
+        <a href="https://github.com/asrul10/expressive"><img src="https://camo.githubusercontent.com/788ee2e26392adbc6260056763f3c4a52bca31d7/68747470733a2f2f696d672e736869656c64732e696f2f64617669642f6465762f617372756c31302f657870726573736976652e737667" alt="Dev-Dependency Status" data-canonical-src="https://img.shields.io/david/dev/asrul10/expressive.svg" style="max-width:100%;"></a>
+    </p>
+    <p>
+        <iframe src="https://ghbtns.com/github-btn.html?user=asrul10&repo=expressive&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+    </p>
 	<md-menu class="exv-share-float" md-offset="0 8" md-position-mode="target-right target">
 		<md-button class="md-fab md-raised" aria-label="share" ng-click="$mdOpenMenu()">
 			<md-icon md-font-icon="zmdi-share" class="zmdi zmdi-hc-lg"></md-icon>
 	    </md-button>
 		<md-menu-content md-whiteframe="10">
 			<md-menu-item>
-				<md-button>
+				<md-button target="_blank" href="http://www.facebook.com/sharer.php?u=https://expressive.kotaxdev.com">
 					<md-icon md-font-icon="zmdi-facebook" class="zmdi zmdi-hc-lg"></md-icon>
 					Facebook
 				</md-button>
 			</md-menu-item>
 			<md-menu-item>
-				<md-button>
+				<md-button target="_blank" href="https://plus.google.com/share?url=https://expressive.kotaxdev.com">
 					<md-icon md-font-icon="zmdi-google-plus" class="zmdi zmdi-hc-lg"></md-icon>
 					Google Plus
 				</md-button>
 			</md-menu-item>
 			<md-menu-item>
-				<md-button>
+				<md-button target="_blank" href="https://twitter.com/share?url=https://expressive.kotaxdev.com">
 					<md-icon md-font-icon="zmdi-twitter" class="zmdi zmdi-hc-lg"></md-icon>
 					Twitter
 				</md-button>
@@ -39,7 +47,7 @@
 <div class="md-headline">Installation</div>
 <div>
     <ol class="list">
-        <li>Install <b>gulp-cli</b>, <b>nodemon</b>, and <b>bower</b> globally</li>
+        <li>Install <b>gulp-cli</b> and <b>bower</b> globally</li>
         <li>
             Clone expressive
             <pre>$ git clone https://github.com/asrul10/expressive.git</pre>
@@ -60,8 +68,12 @@
             <pre>$ node sync.js</pre>
         </li>
         <li>
-            Run expressive
-            <pre>$ nodemon</pre>
+            Run expressive in development
+            <pre>$ gulp build <br>$ gulp serve</pre>
+        </li>
+        <li>
+            For production
+            <pre>$ gulp production</pre>
         </li>
     </ol>
 </div>

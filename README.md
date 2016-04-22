@@ -14,7 +14,7 @@ Password : password
 ```
 
 ## Installation
-Install `gulp-cli`, `nodemon`, and `bower` globally
+Install `gulp-cli` and `bower` globally
 
 Clone expressive
 ```
@@ -37,9 +37,15 @@ Sync models
   $ node sync.js
 ```
 
-Run expressive
+Run expressive in development
 ```
-  $ nodemon
+  $ gulp build
+  $ gulp serve
+```
+
+For production
+```
+  $ gulp production
 ```
 
 Now you can run the app on the browser `http://localhost`

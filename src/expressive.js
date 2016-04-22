@@ -17,6 +17,8 @@
             var currPath = window.location.pathname.replace('#', '');
             var menuList = document.getElementsByClassName('menu-list');
             var content = $('#mainContent').children();
+            var subTitle = $('exv-sub-title').children();
+            subTitle.text('');
             content.scrollTop(0);
 
             if (typeof($route.current.title) !== 'undefined') {
@@ -199,7 +201,7 @@
                         break;
                 }
             }
-        }
-    })
+        };
+    });
 
 })(window, angular);

@@ -25,7 +25,6 @@ gulp.task('scripts', function() {
         .pipe(uglify({
             mangle: false
         }))
-        // .pipe(rev())
         .pipe(gulp.dest('public/scripts'));
 });
 gulp.task('sass', function() {
@@ -124,7 +123,7 @@ gulp.task('clean_styles', function () {
     	.pipe(clean());
 });
 gulp.task('clean_bower', function () {
-	return gulp.src(['public/vendor/**/*.css', 'public/vendor/**/*.js'], {read: false})
+	return gulp.src(['public/vendor/css/*.css', 'public/vendor/js/*.js'], {read: false})
     	.pipe(clean());
 });
 gulp.task('clean', ['clean_scripts', 'clean_styles', 'clean_bower']);
