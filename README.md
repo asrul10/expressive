@@ -7,7 +7,7 @@ Custom M-EAN starter Mysql, Express, Angular, Nodejs with theme Angular Material
 [![Dev-Dependency Status](https://img.shields.io/david/dev/asrul10/expressive.svg)](https://github.com/asrul10/expressive)
 
 ## Demo
-Live demo https://expressive.kotaxdev.com
+Live demo http://expressive.kotaxdev.com
 ```
 Email : demo@demo.com
 Password : password
